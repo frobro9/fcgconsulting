@@ -1,0 +1,36 @@
+# Capital Consulting
+
+> Engineers at heart. We build brands, run paid campaigns, and drive measurable growth — no fluff, just execution.
+
+Capital Consulting is a marketing and brand-building firm based in Ottawa, ON, serving clients nationwide across Canada. Founded by ex-FANG engineers, we apply engineering rigour to brand strategy, design, SEO, and paid media.
+
+## Services
+
+- **Strategy** — Brand positioning, messaging architecture, competitive analysis, go-to-market strategy
+- **Design** — Logo design, brand identity systems, visual language
+- **SEO** — Technical SEO, on-page optimization, content strategy, local SEO (Ottawa & Toronto)
+- **Paid Media** — Google Ads, Meta Ads, programmatic display, performance campaigns
+- **Content Marketing** — Blog, thought leadership, content calendars
+
+## Pages
+
+- [Home](https://capitalconsulting.ca/)
+- [Services](https://capitalconsulting.ca/services)
+- [About Us](https://capitalconsulting.ca/about)
+- [Our Work](https://capitalconsulting.ca/work)
+- [Insights](https://capitalconsulting.ca/insights)
+- [Contact](https://capitalconsulting.ca/contact)
+
+## Insights
+
+- [AI Marketing Ottawa](https://capitalconsulting.ca/insight/ai-marketing-ottawa)
+- [AI Paid Ads Toronto](https://capitalconsulting.ca/insight/ai-paid-ads-toronto)
+- [Brand Identity](https://capitalconsulting.ca/insight/brand-identity)
+- [Brand Strategy Toronto](https://capitalconsulting.ca/insight/brand-strategy-toronto)
+- [Content Marketing Ottawa & Toronto](https://capitalconsulting.ca/insight/content-marketing-ottawa-toronto)
+- [SEO Ottawa](https://capitalconsulting.ca/insight/seo-ottawa)
+
+## Contact
+
+- Email: info@capitalconsulting.ca
+- Location: Ottawa, ON — serving clients nationwide

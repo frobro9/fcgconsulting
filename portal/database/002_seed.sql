@@ -1,0 +1,4 @@
+-- Insert admin user (run after creating admin user in Supabase Auth dashboard)
+-- Replace 'ADMIN_USER_UUID' with the actual UUID from auth.users
+-- insert into public.clients (id, email, name, company, role) values
+--   ('ADMIN_USER_UUID', 'info@capitalconsulting.ca', 'Admin', 'Capital Consulting', 'admin');
