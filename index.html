@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Capital Consulting — Engineers at heart. We build brands, run paid campaigns, and drive measurable growth through logos, brand strategy, SEO, and more.">
-  <title>Capital Consulting</title>
+  <meta name="description" content="FCG Consulting — Strategy first. We build brands, run paid campaigns, and drive measurable growth through logos, brand strategy, SEO, and more.">
+  <title>FCG Consulting</title>
   <link rel="icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,17 +28,20 @@
   <!-- Navigation -->
   <nav id="nav" class="nav">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo" aria-label="Capital Consulting">
-        <img src="assets/CapConsulting_Navy_Transparent.svg" alt="Capital Consulting" class="nav-logo-img">
-      </a>
-      <ul class="nav-links">
-        <li><a href="services">Services</a></li>
-        <li><a href="insights">Insights</a></li>
-        <li><a href="about">About Us</a></li>
-        <li><a href="work">Our Work</a></li>
-        <li><a href="contact" class="nav-cta">Contact</a></li>
-        <li><a href="https://capital-consulting-k9d8.vercel.app" class="nav-cta" target="_blank">Client Portal</a></li>
-      </ul>
+      <div class="nav-left">
+        <a href="#hero" class="nav-logo" aria-label="FCG Consulting">
+          <img src="assets/FCGLOGO_cropped.png" alt="FCG Consulting" class="nav-logo-img">
+        </a>
+        <ul class="nav-links">
+          <li><a href="services">Services <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="work">Our Work <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="insights">Insights <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <a href="contact" class="nav-btn-outline">Contact</a>
+        <a href="https://capital-consulting-k9d8.vercel.app" class="nav-btn-solid" target="_blank">Client Portal</a>
+      </div>
       <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -46,8 +49,6 @@
     <div class="nav-mobile" id="mobileMenu" aria-hidden="true">
       <a href="services" class="mobile-link">Services</a>
       <a href="insights" class="mobile-link">Insights</a>
-      <a href="about" class="mobile-link">About Us</a>
-      <a href="work" class="mobile-link">Our Work</a>
       <a href="contact" class="mobile-link mobile-cta">Contact</a>
       <a href="https://capital-consulting-k9d8.vercel.app" class="mobile-link mobile-cta" target="_blank">Client Portal</a>
     </div>
@@ -55,83 +56,305 @@
 
   <!-- Hero -->
   <section id="hero" class="hero">
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="eyebrow-dot"></span>
-          <span class="eyebrow-text">Engineered Marketing</span>
-        </div>
-        <h1 class="hero-title">Engineers Who<br><em>Build</em><br>Brands</h1>
-        <p class="hero-subtitle">We're engineers at heart. We build brands, run campaigns, and ship results — no fluff, just execution.</p>
-        <div class="hero-actions">
-          <a href="contact" class="btn btn-primary">Book a Strategy Call</a>
-          <a href="work" class="btn btn-ghost">View Our Work</a>
+
+    <!-- Scrolling background grid -->
+    <div class="hero-bg" aria-hidden="true">
+
+      <div class="hero-bg-col">
+        <div class="hero-bg-track hero-bg-track--up" style="--speed:28s">
+          <div class="hbc hbc--screenshot"><img src="assets/fortera-homes-screenshot.jpg" alt=""><span class="hbc-label">Fortera Homes — Web Redesign</span></div>
+          <div class="hbc hbc--dark"><div class="hbc-num">3.2×</div><div class="hbc-sub">Average ROAS</div></div>
+          <div class="hbc hbc--light"><div class="hbc-tag">Brand Identity</div><div class="hbc-copy">Logo. Deck.<br>Collateral.</div></div>
+          <div class="hbc hbc--screenshot"><img src="assets/fortera-homes-screenshot.jpg" alt=""><span class="hbc-label">Fortera Homes — Web Redesign</span></div>
+          <div class="hbc hbc--dark"><div class="hbc-num">3.2×</div><div class="hbc-sub">Average ROAS</div></div>
+          <div class="hbc hbc--light"><div class="hbc-tag">Brand Identity</div><div class="hbc-copy">Logo. Deck.<br>Collateral.</div></div>
         </div>
       </div>
-      <div class="hero-visual">
-        <div class="hero-graphic">
-          <svg class="hero-svg" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-            <!-- Outer rings -->
-            <circle cx="240" cy="240" r="220" stroke="#2F2B49" stroke-width="0.8" opacity="0.18"/>
-            <circle cx="240" cy="240" r="180" stroke="#2F2B49" stroke-width="0.8" opacity="0.25"/>
-            <!-- Mid arc -->
-            <circle cx="240" cy="240" r="140" stroke="#2F2B49" stroke-width="1.5" opacity="0.4" stroke-dasharray="290 600" stroke-dashoffset="-60"/>
-            <!-- Inner geometric hexagon -->
-            <path d="M240 80 L380 160 L380 320 L240 400 L100 320 L100 160 Z" stroke="#2F2B49" stroke-width="1.2" opacity="0.3" fill="none"/>
-            <!-- Cross lines -->
-            <line x1="100" y1="160" x2="380" y2="320" stroke="#2F2B49" stroke-width="0.6" opacity="0.14"/>
-            <line x1="380" y1="160" x2="100" y2="320" stroke="#2F2B49" stroke-width="0.6" opacity="0.14"/>
-            <line x1="240" y1="80" x2="240" y2="400" stroke="#2F2B49" stroke-width="0.6" opacity="0.14"/>
-            <!-- Center dot (amber accent) -->
-            <circle cx="240" cy="240" r="7" fill="#2F2B49" opacity="0.9"/>
-            <circle cx="240" cy="240" r="20" stroke="#2F2B49" stroke-width="1.2" opacity="0.45" fill="none"/>
-            <!-- Vertex dots -->
-            <circle cx="240" cy="80" r="4.5" fill="#2F2B49" opacity="0.55"/>
-            <circle cx="380" cy="160" r="4.5" fill="#2F2B49" opacity="0.45"/>
-            <circle cx="380" cy="320" r="4.5" fill="#2F2B49" opacity="0.45"/>
-            <circle cx="240" cy="400" r="4.5" fill="#2F2B49" opacity="0.55"/>
-            <circle cx="100" cy="320" r="4.5" fill="#2F2B49" opacity="0.45"/>
-            <circle cx="100" cy="160" r="4.5" fill="#2F2B49" opacity="0.45"/>
-            <!-- Inner diamond (amber) -->
-            <path d="M240 200 L280 240 L240 280 L200 240 Z" stroke="#2F2B49" stroke-width="1.4" opacity="0.55" fill="none"/>
-            <!-- Chart bars -->
-            <rect x="152" y="290" width="16" height="40" fill="#2F2B49" opacity="0.1" rx="2"/>
-            <rect x="176" y="270" width="16" height="60" fill="#2F2B49" opacity="0.12" rx="2"/>
-            <rect x="200" y="255" width="16" height="75" fill="#2F2B49" opacity="0.15" rx="2"/>
-            <rect x="224" y="242" width="16" height="88" fill="#2F2B49" opacity="0.17" rx="2"/>
-            <rect x="248" y="228" width="16" height="102" fill="#2F2B49" opacity="0.2" rx="2"/>
-            <rect x="272" y="212" width="16" height="118" fill="#2F2B49" opacity="0.18" rx="2"/>
-            <rect x="296" y="222" width="16" height="108" fill="#2F2B49" opacity="0.15" rx="2"/>
-          </svg>
-          <div class="hero-graphic-label">
-            <span class="hero-graphic-stat"><span class="hero-stat-num">12×</span><span>avg. ROI</span></span>
-            <span class="hero-graphic-stat"><span class="hero-stat-num">98%</span><span>client retention</span></span>
-          </div>
+
+      <div class="hero-bg-col">
+        <div class="hero-bg-track hero-bg-track--down" style="--speed:22s">
+          <div class="hbc hbc--mid"><div class="hbc-tag">Go-to-Market</div><div class="hbc-copy">Strategy built<br>before you need it.</div></div>
+          <div class="hbc hbc--light"><div class="hbc-num hbc-num--sm">+240%</div><div class="hbc-sub">Organic Traffic</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-icon">◈</div><div class="hbc-sub">Paid Search &amp; Social</div></div>
+          <div class="hbc hbc--mid"><div class="hbc-tag">Go-to-Market</div><div class="hbc-copy">Strategy built<br>before you need it.</div></div>
+          <div class="hbc hbc--light"><div class="hbc-num hbc-num--sm">+240%</div><div class="hbc-sub">Organic Traffic</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-icon">◈</div><div class="hbc-sub">Paid Search &amp; Social</div></div>
         </div>
+      </div>
+
+      <div class="hero-bg-col">
+        <div class="hero-bg-track hero-bg-track--up" style="--speed:32s">
+          <div class="hbc hbc--chart"><div class="hbc-bars"><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:80%"></span><span style="height:70%"></span><span style="height:90%"></span><span style="height:75%"></span></div><div class="hbc-sub">Performance Dashboard</div></div>
+          <div class="hbc hbc--light"><div class="hbc-num hbc-num--sm">48%</div><div class="hbc-sub">Email Open Rate</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-tag">SEO</div><div class="hbc-copy">Rank where<br>it matters most.</div></div>
+          <div class="hbc hbc--chart"><div class="hbc-bars"><span style="height:40%"></span><span style="height:65%"></span><span style="height:55%"></span><span style="height:80%"></span><span style="height:70%"></span><span style="height:90%"></span><span style="height:75%"></span></div><div class="hbc-sub">Performance Dashboard</div></div>
+          <div class="hbc hbc--light"><div class="hbc-num hbc-num--sm">48%</div><div class="hbc-sub">Email Open Rate</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-tag">SEO</div><div class="hbc-copy">Rank where<br>it matters most.</div></div>
+        </div>
+      </div>
+
+      <div class="hero-bg-col">
+        <div class="hero-bg-track hero-bg-track--down" style="--speed:24s">
+          <div class="hbc hbc--quote"><div class="hbc-quote-mark">"</div><div class="hbc-copy">FCG turned our ad spend into our best quarter ever.</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-num">100%</div><div class="hbc-sub">Client Retention</div></div>
+          <div class="hbc hbc--mid"><div class="hbc-tag">Web Strategy</div><div class="hbc-copy">Convert visitors<br>into clients.</div></div>
+          <div class="hbc hbc--quote"><div class="hbc-quote-mark">"</div><div class="hbc-copy">FCG turned our ad spend into our best quarter ever.</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-num">100%</div><div class="hbc-sub">Client Retention</div></div>
+          <div class="hbc hbc--mid"><div class="hbc-tag">Web Strategy</div><div class="hbc-copy">Convert visitors<br>into clients.</div></div>
+        </div>
+      </div>
+
+      <div class="hero-bg-col">
+        <div class="hero-bg-track hero-bg-track--up" style="--speed:26s">
+          <div class="hbc hbc--dark"><div class="hbc-num">12×</div><div class="hbc-sub">Average ROI</div></div>
+          <div class="hbc hbc--light"><div class="hbc-tag">Ottawa &amp; Toronto</div><div class="hbc-copy">Serving businesses<br>nationwide.</div></div>
+          <div class="hbc hbc--mid"><div class="hbc-icon">▲</div><div class="hbc-sub">Analytics &amp; Insights</div></div>
+          <div class="hbc hbc--dark"><div class="hbc-num">12×</div><div class="hbc-sub">Average ROI</div></div>
+          <div class="hbc hbc--light"><div class="hbc-tag">Ottawa &amp; Toronto</div><div class="hbc-copy">Serving businesses<br>nationwide.</div></div>
+          <div class="hbc hbc--mid"><div class="hbc-icon">▲</div><div class="hbc-sub">Analytics &amp; Insights</div></div>
+        </div>
+      </div>
+
+    </div><!-- /hero-bg -->
+
+    <!-- Gradient scrim -->
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <!-- Center overlay -->
+    <div class="hero-center">
+      <div class="hero-center-card">
+        <h1 class="hero-headline" id="heroHeadline">We Build Brands<br>That <em>Convert</em></h1>
+        <form class="hero-quote-form" id="quoteForm" onsubmit="handleQuoteSubmit(event)">
+          <div class="hero-input-wrap">
+            <span class="hero-input-prefix">https://</span>
+            <input type="text" id="websiteInput" class="hero-input" placeholder="yourwebsite.com" autocomplete="off" spellcheck="false"/>
+            <button type="submit" class="hero-input-btn">Get My Free Quote</button>
+          </div>
+          <p class="hero-input-subtext">Enter your website — a consultant will reach out within 24 hours.</p>
+        </form>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Client logos marquee -->
+  <div class="logos-strip">
+    <div class="logos-track">
+      <span>Fortera Homes</span><span class="logos-dot">·</span>
+      <span>Ottawa Real Estate</span><span class="logos-dot">·</span>
+      <span>Toronto Startups</span><span class="logos-dot">·</span>
+      <span>Healthcare Brands</span><span class="logos-dot">·</span>
+      <span>E-Commerce</span><span class="logos-dot">·</span>
+      <span>Professional Services</span><span class="logos-dot">·</span>
+      <span>SaaS Companies</span><span class="logos-dot">·</span>
+      <span>Local Businesses</span><span class="logos-dot">·</span>
+      <span>Fortera Homes</span><span class="logos-dot">·</span>
+      <span>Ottawa Real Estate</span><span class="logos-dot">·</span>
+      <span>Toronto Startups</span><span class="logos-dot">·</span>
+      <span>Healthcare Brands</span><span class="logos-dot">·</span>
+      <span>E-Commerce</span><span class="logos-dot">·</span>
+      <span>Professional Services</span><span class="logos-dot">·</span>
+      <span>SaaS Companies</span><span class="logos-dot">·</span>
+      <span>Local Businesses</span><span class="logos-dot">·</span>
+    </div>
+  </div>
+
+  <!-- Services - dark -->
+  <section id="services" class="services-dark">
+    <div class="sd-header">
+      <h2 class="sd-title">Everything your<br>brand needs.</h2>
+      <a href="services" class="sd-link">View all services →</a>
+    </div>
+    <div class="sd-grid sd-grid--6">
+
+      <div class="sd-card sd-card--web">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">Web Design & Development</span>
+          <div class="sd-vis-mockup">
+            <div class="sd-mock-bar"></div>
+            <div class="sd-mock-hero"></div>
+            <div class="sd-mock-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="sd-vis-result">Built from scratch or redesigned</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">Web Design & Dev</div>
+          <p class="sd-card-desc">Custom websites built by our designers — new builds, redesigns, and everything in between.</p>
+        </div>
+      </div>
+
+      <div class="sd-card sd-card--social">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">Social Media Management</span>
+          <div class="sd-vis-social">
+            <div class="sd-social-icons">
+              <span>in</span><span>f</span><span>ig</span>
+            </div>
+            <div class="sd-social-sched">
+              <span></span><span class="active"></span><span></span><span class="active"></span><span></span><span class="active"></span><span></span>
+            </div>
+          </div>
+          <div class="sd-vis-result">Full account takeover & scheduling</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">Social Media</div>
+          <p class="sd-card-desc">Full account takeover — Instagram, LinkedIn & Facebook. We handle posting, content, and community.</p>
+        </div>
+      </div>
+
+      <div class="sd-card sd-card--brand">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">Brand & Design</span>
+          <div class="sd-vis-brand-preview">
+            <div class="sd-brand-mark">FCG</div>
+            <div class="sd-brand-swatches"><span></span><span></span><span></span></div>
+          </div>
+          <div class="sd-vis-result">Logos · Decks · Flyers · Business Cards</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">Brand & Design</div>
+          <p class="sd-card-desc">Full rebrands, logo creation, decks, flyers, and business cards — all by our graphic designers.</p>
+        </div>
+      </div>
+
+      <div class="sd-card sd-card--ai">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">AI Consulting</span>
+          <div class="sd-vis-ai">
+            <div class="sd-ai-node">AI</div>
+            <div class="sd-ai-lines">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="sd-vis-result">Automate what slows you down</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">AI Consulting</div>
+          <p class="sd-card-desc">Our AI engineers integrate AI into your tech and operations — whatever problem you want to solve.</p>
+        </div>
+      </div>
+
+      <div class="sd-card sd-card--analytics">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">Analytics & Insights</span>
+          <div class="sd-vis-chart-wrap">
+            <svg viewBox="0 0 120 56" fill="none" width="100%">
+              <polyline points="0,50 24,36 48,42 72,18 96,24 120,10" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,54 24,46 48,50 72,34 96,38 120,28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="sd-vis-result">Custom dashboards built for you</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">Analytics Dashboard</div>
+          <p class="sd-card-desc">A custom-built dashboard so you can see exactly how your business is performing — no guesswork.</p>
+        </div>
+      </div>
+
+      <div class="sd-card sd-card--drone">
+        <div class="sd-card-visual">
+          <span class="sd-work-tag">Aerial & Drone</span>
+          <div class="sd-vis-drone">
+            <svg viewBox="0 0 80 60" fill="none" width="100%">
+              <path d="M40 15 L55 35 L40 50 L25 35 Z" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="rgba(255,255,255,0.08)"/>
+              <circle cx="40" cy="32" r="4" fill="rgba(255,255,255,0.4)"/>
+              <path d="M10 10 Q40 5 70 10" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+              <path d="M8 20 Q40 12 72 20" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <div class="sd-vis-result">Drone footage for any platform</div>
+        </div>
+        <div class="sd-card-footer">
+          <div class="sd-card-label">Drone & Aerial Shots</div>
+          <p class="sd-card-desc">Stunning aerial footage and photography for your website, social media, flyers, or trade show material.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Work teaser -->
+  <section class="insights-section">
+    <div class="insights-section-header">
+      <h2 class="work-section-title">Our work.</h2>
+      <a href="contact" class="work-view-all">Request a walkthrough →</a>
+    </div>
+    <div class="insights-scroll-track">
+      <div class="ins-card ins-card--work">
+        <div class="ins-card-tag">Paid Search</div>
+        <h3 class="ins-card-title ins-card-stat">3.2×</h3>
+        <p class="ins-card-excerpt">Average ROAS across Google Ads campaigns for a Toronto-based client.</p>
+        <a href="contact" class="ins-card-link">See how we did it →</a>
+      </div>
+      <div class="ins-card ins-card--work">
+        <div class="ins-card-tag">SEO</div>
+        <h3 class="ins-card-title ins-card-stat">+240%</h3>
+        <p class="ins-card-excerpt">Organic traffic growth in 6 months for an Ottawa professional services firm.</p>
+        <a href="contact" class="ins-card-link">See how we did it →</a>
+      </div>
+      <div class="ins-card ins-card--work">
+        <div class="ins-card-tag">Client Retention</div>
+        <h3 class="ins-card-title ins-card-stat">100%</h3>
+        <p class="ins-card-excerpt">Every client we've worked with has stayed. We build relationships, not just campaigns.</p>
+        <a href="contact" class="ins-card-link">Work with us →</a>
       </div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">What We Do</span>
-        <h2 class="section-title">Full-Stack Marketing<br>Under One Roof</h2>
-        <p class="body-text" style="max-width:520px; margin: 0 auto;">
-          From brand identity to demand generation, we handle the complete marketing
-          stack — engineered, integrated, and built to scale.
-        </p>
-      </div>
-      <div class="services-grid">
+  <!-- Insights preview -->
+  <section class="insights-section">
+    <div class="insights-section-header">
+      <h2 class="work-section-title">From the blog.</h2>
+      <a href="insights" class="work-view-all">View all →</a>
+    </div>
+    <div class="insights-scroll-track">
+      <article class="ins-card">
+        <div class="ins-card-tag">AI Marketing</div>
+        <h3 class="ins-card-title">How Ottawa Businesses Are Using AI to Outperform the Competition in 2025</h3>
+        <p class="ins-card-excerpt">AI isn't just for big tech. Ottawa SMBs are using it to automate campaigns and cut ad spend.</p>
+        <a href="insight/ai-marketing-ottawa" class="ins-card-link">Read article →</a>
+      </article>
+      <article class="ins-card">
+        <div class="ins-card-tag">Brand Strategy</div>
+        <h3 class="ins-card-title">Brand Strategy for Toronto Startups: Build the Foundation Before You Need It</h3>
+        <p class="ins-card-excerpt">Most startups think about brand after they've raised. By then, you're rebuilding from scratch.</p>
+        <a href="insight/brand-strategy-toronto" class="ins-card-link">Read article →</a>
+      </article>
+      <article class="ins-card">
+        <div class="ins-card-tag">Local SEO</div>
+        <h3 class="ins-card-title">Local SEO for Ottawa Businesses: How to Rank When It Matters Most</h3>
+        <p class="ins-card-excerpt">Most Ottawa businesses are invisible to the customers searching for them right now.</p>
+        <a href="insight/seo-ottawa" class="ins-card-link">Read article →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA dark -->
+  <section class="cta-dark">
+    <div class="cta-dark-inner">
+      <h2 class="cta-dark-title">Ready to grow your business?</h2>
+      <p class="cta-dark-sub">Enter your website and we'll reach out with a free audit within 24 hours.</p>
+      <form class="hero-quote-form" onsubmit="handleQuoteSubmit(event)">
+        <div class="hero-input-wrap hero-input-wrap--dark">
+          <span class="hero-input-prefix">https://</span>
+          <input type="text" id="websiteInputCta" class="hero-input" placeholder="yourwebsite.com" autocomplete="off" spellcheck="false"/>
+          <button type="submit" class="hero-input-btn">Get My Free Quote</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Services (hidden original grid) -->
+  <div style="display:none">
+    <div class="services-grid">
 
         <div class="service-card reveal">
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 3L25 9V19L14 25L3 19V9L14 3Z" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M14 3V25M3 9L25 9M3 19L25 19" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-                <circle cx="14" cy="14" r="3" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
+                <path d="M14 3L25 9V19L14 25L3 19V9L14 3Z" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M14 3V25M3 9L25 9M3 19L25 19" stroke="#0b223a" stroke-width="0.7" opacity="0.4"/>
+                <circle cx="14" cy="14" r="3" stroke="#0b223a" stroke-width="1.4" fill="none"/>
               </svg>
             </div>
             <h3 class="service-title">Strategy</h3>
@@ -149,9 +372,9 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect x="4" y="4" width="20" height="20" rx="2" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M4 10H24M10 10V24" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-                <path d="M14 14L20 20M14 20L20 14" stroke="#2F2B49" stroke-width="1.4" stroke-linecap="round"/>
+                <rect x="4" y="4" width="20" height="20" rx="2" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M4 10H24M10 10V24" stroke="#0b223a" stroke-width="0.7" opacity="0.4"/>
+                <path d="M14 14L20 20M14 20L20 14" stroke="#0b223a" stroke-width="1.4" stroke-linecap="round"/>
               </svg>
             </div>
             <h3 class="service-title">Design</h3>
@@ -169,10 +392,10 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <circle cx="14" cy="14" r="11" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M14 3C14 3 8 8 8 14C8 20 14 25 14 25" stroke="#2F2B49" stroke-width="0.8" opacity="0.5"/>
-                <path d="M3 14H25" stroke="#2F2B49" stroke-width="0.8" opacity="0.5"/>
-                <path d="M9 7L19 21" stroke="#2F2B49" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="14" cy="14" r="11" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M14 3C14 3 8 8 8 14C8 20 14 25 14 25" stroke="#0b223a" stroke-width="0.8" opacity="0.5"/>
+                <path d="M3 14H25" stroke="#0b223a" stroke-width="0.8" opacity="0.5"/>
+                <path d="M9 7L19 21" stroke="#0b223a" stroke-width="1.4" stroke-linecap="round"/>
               </svg>
             </div>
             <h3 class="service-title">Digital Marketing</h3>
@@ -190,12 +413,12 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M4 22L10 14L16 18L22 8" stroke="#2F2B49" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="10" cy="14" r="2" fill="#2F2B49" opacity="0.6"/>
-                <circle cx="16" cy="18" r="2" fill="#2F2B49" opacity="0.6"/>
-                <circle cx="22" cy="8" r="2" fill="#2F2B49" opacity="0.8"/>
-                <path d="M4 26H24" stroke="#2F2B49" stroke-width="0.8" opacity="0.3"/>
-                <path d="M4 4V26" stroke="#2F2B49" stroke-width="0.8" opacity="0.3"/>
+                <path d="M4 22L10 14L16 18L22 8" stroke="#0b223a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="14" r="2" fill="#0b223a" opacity="0.6"/>
+                <circle cx="16" cy="18" r="2" fill="#0b223a" opacity="0.6"/>
+                <circle cx="22" cy="8" r="2" fill="#0b223a" opacity="0.8"/>
+                <path d="M4 26H24" stroke="#0b223a" stroke-width="0.8" opacity="0.3"/>
+                <path d="M4 4V26" stroke="#0b223a" stroke-width="0.8" opacity="0.3"/>
               </svg>
             </div>
             <h3 class="service-title">Analytics & Insights</h3>
@@ -213,199 +436,45 @@
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="section section-alt stats-section">
-    <div class="container">
-      <div class="stats-grid reveal">
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="4">4</span></div>
-          <span class="stat-label">Ex-FANG Engineers</span>
-        </div>
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="10">10</span><span class="stat-suffix">+</span></div>
-          <span class="stat-label">Years Avg. Engineering Experience</span>
-        </div>
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="100">100</span><span class="stat-suffix">%</span></div>
-          <span class="stat-label">Client Retention</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Insights -->
-  <section id="insights" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Insights</span>
-        <h2 class="section-title">Marketing Intelligence<br>for Ottawa &amp; Toronto Brands</h2>
-        <p class="body-text" style="max-width:520px; margin: 0 auto;">
-          Strategy, brand, and AI — written by engineers who've run the campaigns, not just advised on them.
-        </p>
-      </div>
-
-      <div class="insights-grid">
-
-        <article class="insight-card reveal">
-          <div class="insight-card-body">
-            <span class="insight-tag">AI Marketing</span>
-            <h3 class="insight-card-title">How Ottawa Businesses Are Using AI to Outperform the Competition in 2025</h3>
-            <p class="insight-card-excerpt">AI isn't just for big tech. Ottawa SMBs are using it to automate campaigns, personalize outreach, and cut ad spend — without hiring a single extra person.</p>
-          </div>
-          <div class="insight-card-footer">
-            <span class="insight-meta">
-              <span>Mar 2025</span>
-              <span class="insight-meta-dot"></span>
-              <span>6 min read</span>
-            </span>
-            <a href="insight/ai-marketing-ottawa" class="insight-read-link">
-              Read
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="insight-card reveal">
-          <div class="insight-card-body">
-            <span class="insight-tag">Brand Strategy</span>
-            <h3 class="insight-card-title">Brand Strategy for Toronto Startups: Build the Foundation Before You Need It</h3>
-            <p class="insight-card-excerpt">Most Toronto startups think about brand after they've raised. By then, you're rebuilding something that should've been architected from day one.</p>
-          </div>
-          <div class="insight-card-footer">
-            <span class="insight-meta">
-              <span>Feb 2025</span>
-              <span class="insight-meta-dot"></span>
-              <span>7 min read</span>
-            </span>
-            <a href="insight/brand-strategy-toronto" class="insight-read-link">
-              Read
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="insight-card reveal">
-          <div class="insight-card-body">
-            <span class="insight-tag">Local SEO</span>
-            <h3 class="insight-card-title">Local SEO for Ottawa Businesses: How to Rank When It Matters Most</h3>
-            <p class="insight-card-excerpt">Most Ottawa businesses are invisible to the customers searching for them right now. Here's the exact playbook for dominating local search — no fluff.</p>
-          </div>
-          <div class="insight-card-footer">
-            <span class="insight-meta">
-              <span>Jan 2025</span>
-              <span class="insight-meta-dot"></span>
-              <span>8 min read</span>
-            </span>
-            <a href="insight/seo-ottawa" class="insight-read-link">
-              Read
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="insights-cta-row reveal">
-        <a href="insights" class="btn btn-ghost">View All Insights</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Teaser -->
-  <section id="about" class="section section-alt about-teaser">
-    <div class="container">
-      <div class="about-teaser-inner reveal">
-        <div class="about-teaser-content">
-          <span class="section-label">Who We Are</span>
-          <h2 class="section-title">Engineers with Zero Fluff.</h2>
-          <p class="body-text">We're a team of four ex-FANG engineers who got tired of watching bad marketing waste good businesses. We understand systems, processes, and data at a level most agencies never will. So we built the firm we always wanted to hire.</p>
-          <a href="about" class="btn btn-primary">Meet the Team</a>
-        </div>
-        <div class="about-teaser-pillars">
-          <div class="about-mini-pillar reveal">
-            <div class="pillar-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M4 11L8 7L12 11L16 5L20 9" stroke="#2F2B49" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3 18H19" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="pillar-title">Everything Is Data</h3>
-              <p class="pillar-body">Every decision is instrumented, every hypothesis tested. We don't guess — we measure.</p>
-            </div>
-          </div>
-          <div class="about-mini-pillar reveal">
-            <div class="pillar-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M11 2V20M2 7L20 7M2 15L20 15" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="pillar-title">We Understand Process</h3>
-              <p class="pillar-body">Working at FANG-tier orgs means nothing ships without a process. We bring that same rigour to marketing.</p>
-            </div>
-          </div>
-          <div class="about-mini-pillar reveal">
-            <div class="pillar-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M11 2C7.5 2 4 4.5 4 8.5C4 13.5 11 20 11 20C11 20 18 13.5 18 8.5C18 4.5 14.5 2 11 2Z" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <circle cx="11" cy="8.5" r="2.5" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="pillar-title">Here to Execute</h3>
-              <p class="pillar-body">We don't produce decks and disappear. We build, ship, and iterate until it works.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Banner -->
-  <section class="section cta-banner">
-    <div class="container">
-      <div class="cta-banner-inner reveal">
-        <div class="cta-banner-text">
-          <h2 class="section-title" style="margin-bottom:0.5rem;">Ready to Build<br>Something Real?</h2>
-          <p class="body-text" style="margin-bottom:0;">Let's talk about your goals — no commitment required.</p>
-        </div>
-        <div class="cta-banner-actions">
-          <a href="contact" class="btn btn-primary">Book a Strategy Call</a>
-          <a href="work" class="btn btn-ghost">View Our Work</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          
-          <p class="footer-tagline">Engineers at heart.<br>Brands built to last.</p>
+  <footer class="footer-dark">
+    <div class="footer-dark-top">
+      <div class="footer-dark-brand">
+        <img src="assets/FCGLOGO_transparent.png" alt="FCG Consulting" class="footer-dark-logo">
+        <p class="footer-dark-tagline">Strategy first.<br>Brands built to last.</p>
+      </div>
+      <div class="footer-dark-cols">
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Services</p>
+          <nav>
+            <a href="services">Strategy</a>
+            <a href="services">Brand &amp; Design</a>
+            <a href="services">Digital Marketing</a>
+            <a href="services">Analytics</a>
+          </nav>
         </div>
-        <div>
-          <p class="footer-col-title">Navigation</p>
-          <nav class="footer-nav">
-            <a href="services">Services</a>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Company</p>
+          <nav>
             <a href="insights">Insights</a>
-            <a href="about">About Us</a>
-            <a href="work">Our Work</a>
             <a href="contact">Contact</a>
           </nav>
         </div>
-        <div class="footer-contact-col">
-          <p class="footer-col-title">Contact</p>
-          <p>info@capitalconsulting.ca<br>Ottawa, ON<br>Serving Clients Nationwide</p>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Contact</p>
+          <nav>
+            <a href="mailto:info@fcgconsulting.ca">info@fcgconsulting.ca</a>
+            <a href="https://capital-consulting-k9d8.vercel.app" target="_blank">Client Portal</a>
+          </nav>
+          <p class="footer-dark-address">Ottawa, ON<br>Serving Clients Nationwide</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Capital Consulting. All rights reserved.</p>
-        <p>Engineered Marketing &mdash; Canada</p>
-      </div>
+    </div>
+    <div class="footer-dark-bottom">
+      <p>&copy; 2026 FCG Consulting. All rights reserved.</p>
+      <p>Strategic Marketing &mdash; Canada</p>
     </div>
   </footer>
 

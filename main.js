@@ -1,8 +1,85 @@
 /* ============================================================
-   CAPITAL CONSULTING — main.js
+   FCG CONSULTING — main.js
    ============================================================ */
 
 'use strict';
+
+/* --- Hero typewriter headline ------------------------------ */
+(function () {
+  const lines = [
+    { plain: 'We Build Brands That Convert',  html: 'We Build Brands That <em>Convert</em>' },
+    { plain: 'We Drive Growth With Strategy', html: 'We Drive Growth With <em>Strategy</em>' },
+    { plain: 'We Turn Clicks Into Clients',   html: 'We Turn Clicks Into <em>Clients</em>' },
+    { plain: 'We Make Your Marketing Work',   html: 'We Make Your Marketing <em>Work</em>' },
+  ];
+
+  const el = document.getElementById('heroHeadline');
+  if (!el) return;
+
+  let lineIdx   = 0;
+  let charIdx   = 0;
+  let deleting  = false;
+  let paused    = false;
+
+  const CURSOR  = '<span class="tw-cursor">|</span>';
+  const TYPE_MS = 55;
+  const DEL_MS  = 30;
+  const PAUSE_MS = 2200;
+  const GAP_MS  = 380;
+
+  function render(text) {
+    el.innerHTML = text + CURSOR;
+  }
+
+  function tick() {
+    if (paused) return;
+    const { plain, html } = lines[lineIdx];
+
+    if (!deleting) {
+      charIdx++;
+      if (charIdx < plain.length) {
+        render(plain.slice(0, charIdx));
+        setTimeout(tick, TYPE_MS);
+      } else {
+        // Fully typed — show styled version and pause
+        el.innerHTML = html + CURSOR;
+        paused = true;
+        setTimeout(() => {
+          paused = false;
+          deleting = true;
+          charIdx = plain.length;
+          tick();
+        }, PAUSE_MS);
+      }
+    } else {
+      charIdx--;
+      render(plain.slice(0, charIdx));
+      if (charIdx === 0) {
+        deleting = false;
+        lineIdx = (lineIdx + 1) % lines.length;
+        setTimeout(tick, GAP_MS);
+      } else {
+        setTimeout(tick, DEL_MS);
+      }
+    }
+  }
+
+  // Kick off
+  render('');
+  setTimeout(tick, 600);
+})();
+
+/* --- Hero quote form --------------------------------------- */
+function handleQuoteSubmit(e) {
+  e.preventDefault();
+  const raw = document.getElementById('websiteInput').value.trim();
+  if (!raw) {
+    document.getElementById('websiteInput').focus();
+    return;
+  }
+  const website = raw.replace(/^https?:\/\//i, '');
+  window.location.href = 'contact?website=' + encodeURIComponent(website);
+}
 
 /* --- Nav: add scrolled class ------------------------------- */
 const nav            = document.getElementById('nav');
