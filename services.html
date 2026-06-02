@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Capital Consulting services — strategy, design, digital marketing, and analytics engineered to grow your business.">
-  <title>Services — Capital Consulting</title>
-  <link rel="canonical" href="https://capitalconsulting.ca/services">
+  <meta name="description" content="FCG Consulting services — web design, social media, brand & design, AI consulting, analytics, and drone photography.">
+  <title>Services — FCG Consulting</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="canonical" href="https://fcgconsulting.ca/services">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y9M8KETEZS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -27,25 +28,28 @@
   <!-- Navigation -->
   <nav id="nav" class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo" aria-label="Capital Consulting">
-        <img src="assets/CapConsulting_Navy_Transparent.svg" alt="Capital Consulting" class="nav-logo-img">
-      </a>
-      <ul class="nav-links">
-        <li><a href="services">Services</a></li>
-        <li><a href="insights">Insights</a></li>
-        <li><a href="about">About Us</a></li>
-        <li><a href="work">Our Work</a></li>
-        <li><a href="contact" class="nav-cta">Contact</a></li>
-      </ul>
+      <div class="nav-left">
+        <a href="/" class="nav-logo" aria-label="FCG Consulting">
+          <img src="assets/FCGLOGO_cropped.png" alt="FCG Consulting" class="nav-logo-img">
+        </a>
+        <ul class="nav-links">
+          <li><a href="services">Services <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="work">Our Work <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          <li><a href="insights">Insights <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <a href="contact" class="nav-btn-outline">Contact</a>
+        <a href="https://capital-consulting-k9d8.vercel.app" class="nav-btn-solid" target="_blank">Client Portal</a>
+      </div>
       <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
     <div class="nav-mobile" id="mobileMenu" aria-hidden="true">
       <a href="services" class="mobile-link">Services</a>
-      <a href="insights" class="mobile-link">Insights</a>
-      <a href="about" class="mobile-link">About Us</a>
       <a href="work" class="mobile-link">Our Work</a>
+      <a href="insights" class="mobile-link">Insights</a>
       <a href="contact" class="mobile-link mobile-cta">Contact</a>
       <a href="https://capital-consulting-k9d8.vercel.app" class="mobile-link mobile-cta" target="_blank">Client Portal</a>
     </div>
@@ -56,8 +60,8 @@
     <div class="container">
       <div class="page-hero-inner reveal">
         <span class="section-label">What We Do</span>
-        <h1 class="page-hero-title">Full-Stack Marketing<br>Under One Roof</h1>
-        <p class="page-hero-subtitle">From brand identity to demand generation, we handle the complete marketing stack — engineered, integrated, and built to scale.</p>
+        <h1 class="page-hero-title">Everything your<br>brand needs.</h1>
+        <p class="page-hero-subtitle">One team. Six services. We handle the full stack — from your logo to your analytics dashboard to your drone footage.</p>
       </div>
     </div>
   </section>
@@ -65,25 +69,27 @@
   <!-- Services Grid -->
   <section class="section">
     <div class="container">
-      <div class="services-grid">
+      <div class="services-grid services-grid--6">
 
         <div class="service-card reveal">
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 3L25 9V19L14 25L3 19V9L14 3Z" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M14 3V25M3 9L25 9M3 19L25 19" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-                <circle cx="14" cy="14" r="3" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
+                <rect x="3" y="5" width="22" height="18" rx="2" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M3 10H25" stroke="#0b223a" stroke-width="0.7" opacity="0.4"/>
+                <circle cx="7" cy="7.5" r="1" fill="#0b223a" opacity="0.4"/>
+                <circle cx="11" cy="7.5" r="1" fill="#0b223a" opacity="0.4"/>
+                <rect x="7" y="14" width="8" height="5" rx="1" stroke="#0b223a" stroke-width="0.8" fill="none" opacity="0.5"/>
               </svg>
             </div>
-            <h3 class="service-title">Strategy</h3>
+            <h3 class="service-title">Web Design & Development</h3>
           </div>
-          <p class="service-body">The thinking before the making — positioning, competitive differentiation, and messaging frameworks that define how your brand shows up and who it's for.</p>
+          <p class="service-body">Custom websites built from scratch or redesigned by our team of web designers. Fast, beautiful, and built to convert.</p>
           <ul class="service-list">
-            <li>Brand Positioning</li>
-            <li>Messaging Architecture</li>
-            <li>Competitive Analysis</li>
-            <li>Go-to-Market Strategy</li>
+            <li>New Website Builds</li>
+            <li>Website Redesigns</li>
+            <li>Landing Pages</li>
+            <li>Performance Optimization</li>
           </ul>
         </div>
 
@@ -91,19 +97,20 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect x="4" y="4" width="20" height="20" rx="2" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M4 10H24M10 10V24" stroke="#2F2B49" stroke-width="0.7" opacity="0.4"/>
-                <path d="M14 14L20 20M14 20L20 14" stroke="#2F2B49" stroke-width="1.4" stroke-linecap="round"/>
+                <rect x="4" y="6" width="9" height="9" rx="2" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <rect x="15" y="6" width="9" height="9" rx="2" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <rect x="4" y="17" width="9" height="5" rx="2" stroke="#0b223a" stroke-width="0.8" fill="none" opacity="0.5"/>
+                <rect x="15" y="17" width="9" height="5" rx="2" stroke="#0b223a" stroke-width="0.8" fill="none" opacity="0.5"/>
               </svg>
             </div>
-            <h3 class="service-title">Design</h3>
+            <h3 class="service-title">Social Media Management</h3>
           </div>
-          <p class="service-body">The making — logos, branding decks, copywriting, and collateral that translate your strategy into assets you can actually use.</p>
+          <p class="service-body">We fully take over your social media accounts — Instagram, LinkedIn, Facebook, and more. Posting schedules, content creation, and community management handled end-to-end.</p>
           <ul class="service-list">
-            <li>Logo & Identity Design</li>
-            <li>Copywriting</li>
-            <li>Branding Deck</li>
-            <li>Brand Collateral</li>
+            <li>Instagram & Facebook</li>
+            <li>LinkedIn Management</li>
+            <li>Content & Posting Schedules</li>
+            <li>Community Management</li>
           </ul>
         </div>
 
@@ -111,20 +118,18 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <circle cx="14" cy="14" r="11" stroke="#2F2B49" stroke-width="1.4" fill="none"/>
-                <path d="M14 3C14 3 8 8 8 14C8 20 14 25 14 25" stroke="#2F2B49" stroke-width="0.8" opacity="0.5"/>
-                <path d="M3 14H25" stroke="#2F2B49" stroke-width="0.8" opacity="0.5"/>
-                <path d="M9 7L19 21" stroke="#2F2B49" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M14 4L6 8V14C6 19 14 24 14 24C14 24 22 19 22 14V8L14 4Z" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M10 14L13 17L18 11" stroke="#0b223a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3 class="service-title">Digital Marketing</h3>
+            <h3 class="service-title">Brand & Design</h3>
           </div>
-          <p class="service-body">Paid search, social media, SEO, and email — executed with precision and optimized continuously to maximize reach, engagement, and conversion at every stage of the funnel.</p>
+          <p class="service-body">Full rebrands, logo creation and improvement, brand decks, flyers, and business cards — all crafted by our graphic designers. Whether you need a new identity or a refresh, we've got you.</p>
           <ul class="service-list">
-            <li>Paid Search & Social Ads</li>
-            <li>SEO & Content Strategy</li>
-            <li>Email & Lifecycle Marketing</li>
-            <li>Funnel Optimization</li>
+            <li>Logo Creation & Improvement</li>
+            <li>Full Rebrands</li>
+            <li>Brand Decks & Collateral</li>
+            <li>Flyers & Business Cards</li>
           </ul>
         </div>
 
@@ -132,22 +137,63 @@
           <div class="card-header">
             <div class="service-icon">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M4 22L10 14L16 18L22 8" stroke="#2F2B49" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="10" cy="14" r="2" fill="#2F2B49" opacity="0.6"/>
-                <circle cx="16" cy="18" r="2" fill="#2F2B49" opacity="0.6"/>
-                <circle cx="22" cy="8" r="2" fill="#2F2B49" opacity="0.8"/>
-                <path d="M4 26H24" stroke="#2F2B49" stroke-width="0.8" opacity="0.3"/>
-                <path d="M4 4V26" stroke="#2F2B49" stroke-width="0.8" opacity="0.3"/>
+                <circle cx="14" cy="14" r="10" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <path d="M10 14C10 11.8 11.8 10 14 10C16.2 10 18 11.8 18 14" stroke="#0b223a" stroke-width="1.2" fill="none" opacity="0.5"/>
+                <circle cx="14" cy="14" r="3" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <circle cx="14" cy="14" r="1" fill="#0b223a"/>
               </svg>
             </div>
-            <h3 class="service-title">Analytics & Insights</h3>
+            <h3 class="service-title">AI Consulting</h3>
           </div>
-          <p class="service-body">Dashboard setup, attribution modeling, performance reporting, and data-driven recommendations that turn raw numbers into strategic clarity and confident decisions.</p>
+          <p class="service-body">Our AI engineers work directly with your team to integrate AI into your technology and operations — automating workflows, solving business problems, and making your systems more efficient.</p>
           <ul class="service-list">
+            <li>AI Workflow Automation</li>
+            <li>Technology Integration</li>
+            <li>Process Optimization</li>
+            <li>Custom AI Solutions</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="card-header">
+            <div class="service-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M4 22L10 14L16 18L22 8" stroke="#0b223a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="14" r="2" fill="#0b223a" opacity="0.6"/>
+                <circle cx="16" cy="18" r="2" fill="#0b223a" opacity="0.6"/>
+                <circle cx="22" cy="8" r="2" fill="#0b223a" opacity="0.8"/>
+                <path d="M4 26H24" stroke="#0b223a" stroke-width="0.8" opacity="0.3"/>
+                <path d="M4 4V26" stroke="#0b223a" stroke-width="0.8" opacity="0.3"/>
+              </svg>
+            </div>
+            <h3 class="service-title">Analytics Dashboard</h3>
+          </div>
+          <p class="service-body">A custom-built dashboard so you can see exactly how your business is performing — traffic, conversions, ad spend, and more. No spreadsheets, no guesswork.</p>
+          <ul class="service-list">
+            <li>Custom Dashboard Builds</li>
             <li>Marketing Attribution</li>
-            <li>Performance Dashboards</li>
-            <li>Audience Intelligence</li>
-            <li>Strategic Reporting</li>
+            <li>Performance Reporting</li>
+            <li>Real-Time Insights</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="card-header">
+            <div class="service-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M14 6L20 10V18L14 22L8 18V10L14 6Z" stroke="#0b223a" stroke-width="1.4" fill="none"/>
+                <circle cx="14" cy="14" r="2.5" stroke="#0b223a" stroke-width="1.2" fill="none"/>
+                <path d="M4 4L8 10M24 4L20 10M14 2V6" stroke="#0b223a" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+            </div>
+            <h3 class="service-title">Drone & Aerial Photography</h3>
+          </div>
+          <p class="service-body">Stunning aerial footage and photography for your website, social media, flyers, or trade show material. We capture the shots that make your brand stand out from the ground up.</p>
+          <ul class="service-list">
+            <li>Aerial Photography</li>
+            <li>Drone Video Footage</li>
+            <li>Social Media Content</li>
+            <li>Trade Show & Print Material</li>
           </ul>
         </div>
 
@@ -155,68 +201,61 @@
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="section section-alt stats-section">
-    <div class="container">
-      <div class="stats-grid reveal">
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="4">4</span></div>
-          <span class="stat-label">Ex-FANG Engineers</span>
+  <!-- CTA dark -->
+  <section class="cta-dark">
+    <div class="cta-dark-inner">
+      <h2 class="cta-dark-title">Ready to grow your business?</h2>
+      <p class="cta-dark-sub">Enter your website and we'll reach out with a free audit within 24 hours.</p>
+      <form onsubmit="handleQuoteSubmit(event)">
+        <div class="hero-input-wrap hero-input-wrap--dark">
+          <span class="hero-input-prefix">https://</span>
+          <input type="text" id="websiteInputServices" class="hero-input" placeholder="yourwebsite.com" autocomplete="off" spellcheck="false"/>
+          <button type="submit" class="hero-input-btn">Get My Free Quote</button>
         </div>
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="10">10</span><span class="stat-suffix">+</span></div>
-          <span class="stat-label">Years Avg. Engineering Experience</span>
-        </div>
-        <div class="stat-block">
-          <div class="stat-value"><span class="stat-num" data-target="100">100</span><span class="stat-suffix">%</span></div>
-          <span class="stat-label">Client Retention</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Banner -->
-  <section class="section cta-banner">
-    <div class="container">
-      <div class="cta-banner-inner reveal">
-        <div class="cta-banner-text">
-          <h2 class="section-title" style="margin-bottom:0.5rem;">Ready to Build<br>Something Real?</h2>
-          <p class="body-text" style="margin-bottom:0;">Let's talk about your goals — no commitment required.</p>
-        </div>
-        <div class="cta-banner-actions">
-          <a href="contact" class="btn btn-primary">Book a Strategy Call</a>
-          <a href="work" class="btn btn-ghost">View Our Work</a>
-        </div>
-      </div>
+      </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <p class="footer-tagline">Engineers at heart.<br>Brands built to last.</p>
+  <footer class="footer-dark">
+    <div class="footer-dark-top">
+      <div class="footer-dark-brand">
+        <img src="assets/FCGLOGO_cropped.png" alt="FCG Consulting" class="footer-dark-logo">
+        <p class="footer-dark-tagline">Strategy first.<br>Brands built to last.</p>
+      </div>
+      <div class="footer-dark-cols">
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Services</p>
+          <nav>
+            <a href="services">Web Design & Dev</a>
+            <a href="services">Social Media</a>
+            <a href="services">Brand & Design</a>
+            <a href="services">AI Consulting</a>
+            <a href="services">Analytics</a>
+            <a href="services">Drone & Aerial</a>
+          </nav>
         </div>
-        <div>
-          <p class="footer-col-title">Navigation</p>
-          <nav class="footer-nav">
-            <a href="services">Services</a>
-            <a href="insights">Insights</a>
-            <a href="about">About Us</a>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Company</p>
+          <nav>
             <a href="work">Our Work</a>
+            <a href="insights">Insights</a>
             <a href="contact">Contact</a>
           </nav>
         </div>
-        <div class="footer-contact-col">
-          <p class="footer-col-title">Contact</p>
-          <p>info@capitalconsulting.ca<br>Ottawa, ON<br>Serving Clients Nationwide</p>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Contact</p>
+          <nav>
+            <a href="mailto:info@fcgconsulting.ca">info@fcgconsulting.ca</a>
+            <a href="https://capital-consulting-k9d8.vercel.app" target="_blank">Client Portal</a>
+          </nav>
+          <p class="footer-dark-address">Ottawa, ON<br>Serving Clients Nationwide</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Capital Consulting. All rights reserved.</p>
-        <p>Engineered Marketing &mdash; Canada</p>
-      </div>
+    </div>
+    <div class="footer-dark-bottom">
+      <p>&copy; 2026 FCG Consulting. All rights reserved.</p>
+      <p>Strategic Marketing &mdash; Canada</p>
     </div>
   </footer>
 

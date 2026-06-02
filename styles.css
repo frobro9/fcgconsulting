@@ -827,6 +827,10 @@ textarea { resize: vertical; }
   gap: 1.5rem;
 }
 
+.services-grid--6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .service-card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
