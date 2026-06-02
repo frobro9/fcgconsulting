@@ -831,6 +831,101 @@ textarea { resize: vertical; }
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* --- Services page 2-col card layout ---------------------- */
+.svc-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.svc-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.svc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.svc-card-top {
+  padding: 2rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.svc-card-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.4);
+}
+
+.svc-card-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-card-tagline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.55);
+  margin: 0;
+}
+
+.svc-card-bottom {
+  padding: 1.75rem 2rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.svc-card-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.svc-card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.svc-card-list li {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  color: #666;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.svc-card-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #bbb;
+  font-size: 0.7rem;
+}
+
 /* --- Services page horizontal layout ---------------------- */
 .svc-page-section {
   background: #fff;
