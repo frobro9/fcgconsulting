@@ -234,6 +234,10 @@ textarea { resize: vertical; }
   flex-shrink: 0;
 }
 
+.nav-right .nav-links {
+  margin-right: 1.5rem;
+}
+
 .nav-btn-outline {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.88rem;
