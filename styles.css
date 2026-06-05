@@ -215,7 +215,7 @@ textarea { resize: vertical; }
   align-items: center;
   justify-content: space-between;
   height: var(--nav-h);
-  padding: 0 2rem;
+  padding: 0 2rem 0 0.75rem;
   max-width: var(--max-w);
   margin: 0 auto;
   gap: 1.5rem;
