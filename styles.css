@@ -3863,3 +3863,244 @@ textarea { resize: vertical; }
   .svc-work-card { grid-template-columns: 1fr; }
   .svc-detail-stat-row { flex-direction: column; gap: 1rem; }
 }
+
+/* ============================================================
+   SERVICE DETAIL — SIMPLIFIED LAYOUT
+   ============================================================ */
+
+.svc-simple-section {
+  padding: 4rem 2rem;
+  background: var(--stone);
+}
+.svc-simple-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.svc-offer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.svc-offer-list li {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-light);
+  padding-left: 1.5rem;
+  position: relative;
+}
+.svc-offer-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #0b223a;
+}
+
+.svc-project-section {
+  padding: 5rem 2rem;
+  background: #fff;
+}
+.svc-project-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.svc-project-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+.svc-project-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.svc-project-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+.svc-project-link {
+  color: #0b223a;
+  font-weight: 600;
+  text-decoration: none;
+}
+.svc-project-link:hover { text-decoration: underline; }
+
+.svc-screenshots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.svc-screenshots img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+.svc-screenshots--2col {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 800px;
+}
+
+/* ============================================================
+   BRAND DECK MOCKUP
+   ============================================================ */
+
+.brand-deck {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+.bd-slide {
+  padding: 2.5rem;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.bd-slide--cover {
+  background: #0b223a;
+  grid-column: 1 / -1;
+  align-items: center;
+  text-align: center;
+  min-height: 300px;
+}
+.bd-slide--light { background: #f9f7f4; }
+.bd-slide--dark { background: #1a1a1a; }
+.bd-slide--navy { background: #0b223a; }
+
+.bd-cover-content { display: flex; flex-direction: column; align-items: center; }
+.bd-cover-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.5rem;
+}
+.bd-cover-year {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.bd-slide-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 1.5rem;
+}
+
+.bd-logo-grid {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.bd-logo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  flex: 1;
+}
+.bd-logo-item--light { background: #fff; border: 1px solid #eee; }
+.bd-logo-item--dark { background: #0b223a; }
+.bd-logo-item span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  color: #999;
+}
+.bd-logo-item--dark span { color: rgba(255,255,255,0.4); }
+
+.bd-colors {
+  display: flex;
+  gap: 0.75rem;
+  height: 140px;
+}
+.bd-color-swatch {
+  flex: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem;
+  position: relative;
+}
+.bd-color-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.bd-color-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+.bd-color-hex {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.bd-type { display: flex; flex-direction: column; gap: 1.5rem; }
+.bd-type-sample { margin-bottom: 0.25rem; color: var(--ink); }
+.bd-type-meta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  color: #aaa;
+}
+
+.bd-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.bd-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  border-left: 2px solid rgba(255,255,255,0.2);
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.bd-identity-grid {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .brand-deck { grid-template-columns: 1fr; }
+  .bd-slide--cover { grid-column: 1; }
+  .svc-screenshots { grid-template-columns: 1fr; }
+  .svc-screenshots--2col { grid-template-columns: 1fr; }
+  .bd-colors { flex-direction: column; height: auto; }
+  .bd-logo-grid { flex-direction: column; }
+  .bd-identity-grid { flex-direction: column; }
+}
