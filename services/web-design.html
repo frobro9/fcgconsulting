@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FCG Consulting — Web Design & Development. Custom websites built by our designers — new builds, redesigns, landing pages, and performance optimization.">
+  <title>Web Design & Development — FCG Consulting</title>
+  <link rel="icon" type="image/png" href="../assets/FAVICON.png">
+  <link rel="apple-touch-icon" href="../assets/FAVICON.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <nav id="nav" class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" class="nav-logo" aria-label="FCG Consulting">
+          <img src="../assets/FCGCONSULTING.png" alt="FCG Consulting" class="nav-logo-img">
+        </a>
+      </div>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="../services">Services</a></li>
+          <li><a href="../work">Our Work</a></li>
+          <li><a href="../insights">Insights</a></li>
+        </ul>
+        <a href="../contact" class="nav-btn-outline">Contact</a>
+        <a href="https://capital-consulting-k9d8.vercel.app" class="nav-btn-solid" target="_blank">Client Portal</a>
+      </div>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu" aria-hidden="true">
+      <a href="../services" class="mobile-link">Services</a>
+      <a href="../work" class="mobile-link">Our Work</a>
+      <a href="../insights" class="mobile-link">Insights</a>
+      <a href="../contact" class="mobile-link mobile-cta">Contact</a>
+      <a href="https://capital-consulting-k9d8.vercel.app" class="mobile-link mobile-cta" target="_blank">Client Portal</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="svc-detail-hero" style="background:#0b223a;">
+    <div class="svc-detail-hero-inner">
+      <a href="../services" class="svc-back">← All Services</a>
+      <p class="svc-detail-tag">Web Design &amp; Development</p>
+      <h1 class="svc-detail-title">Websites that win clients<br><em>before you say a word.</em></h1>
+      <p class="svc-detail-sub">We build custom websites from scratch — fast, clean, and built to convert. From simple landing pages to full rebrands with custom dev work.</p>
+      <a href="../contact" class="svc-detail-cta">Get a free audit →</a>
+    </div>
+  </section>
+
+  <!-- What's included -->
+  <section class="svc-detail-section">
+    <div class="svc-detail-inner">
+      <div class="svc-detail-col">
+        <h2 class="svc-detail-heading">What's included</h2>
+        <ul class="svc-detail-list">
+          <li>New website builds (custom design + dev)</li>
+          <li>Website redesigns &amp; refreshes</li>
+          <li>Landing pages for campaigns or services</li>
+          <li>Performance optimization &amp; speed improvements</li>
+          <li>Mobile-first responsive design</li>
+          <li>SEO-ready structure &amp; metadata</li>
+          <li>Contact forms &amp; lead capture</li>
+          <li>Ongoing maintenance &amp; updates</li>
+        </ul>
+      </div>
+      <div class="svc-detail-col">
+        <h2 class="svc-detail-heading">Who it's for</h2>
+        <ul class="svc-detail-list">
+          <li>Businesses with an outdated or underperforming site</li>
+          <li>New businesses launching their first web presence</li>
+          <li>Companies running paid ads that need a high-converting landing page</li>
+          <li>Brands that want a site that actually reflects their quality</li>
+        </ul>
+        <div class="svc-detail-stat-row">
+          <div class="svc-detail-stat">
+            <span class="svc-stat-num">+240%</span>
+            <span class="svc-stat-label">Avg. organic traffic increase</span>
+          </div>
+          <div class="svc-detail-stat">
+            <span class="svc-stat-num">3.2×</span>
+            <span class="svc-stat-label">Avg. ROAS after redesign</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past work -->
+  <section class="svc-detail-work">
+    <div class="svc-detail-inner">
+      <h2 class="svc-detail-heading">Past work</h2>
+      <div class="svc-work-card">
+        <div class="svc-work-card-text">
+          <p class="svc-work-client">Fortera Homes</p>
+          <p class="svc-work-industry">Rental &amp; Property Management · Ottawa, ON</p>
+          <p class="svc-work-desc">Fortera came to us needing a brand that communicated trust, quality, and a seamless rental experience. We built their complete identity from the ground up — logo, brand strategy, branding deck, and copywriting — then drove qualified tenant inquiries through a new website, paid social campaigns, SEO, and funnel optimization.</p>
+          <div class="svc-work-tags">
+            <span>Website Build</span><span>Brand Strategy</span><span>SEO</span><span>Paid Social</span>
+          </div>
+        </div>
+        <div class="svc-work-card-img">
+          <img src="../assets/fortera-homes-screenshot.jpg" alt="Fortera Homes website" style="width:100%;border-radius:12px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-dark">
+    <div class="cta-dark-inner">
+      <h2 class="cta-dark-title">Ready for a site that works?</h2>
+      <p class="cta-dark-sub">Enter your website and we'll reach out with a free audit within 24 hours.</p>
+      <form onsubmit="handleQuoteSubmit(event)">
+        <div class="hero-input-wrap hero-input-wrap--dark">
+          <span class="hero-input-prefix">https://</span>
+          <input type="text" class="hero-input" placeholder="yourwebsite.com" autocomplete="off" spellcheck="false"/>
+          <button type="submit" class="hero-input-btn">Get My Free Quote</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer-dark">
+    <div class="footer-dark-top">
+      <div class="footer-dark-brand">
+        <img src="../assets/FCGCONSULTING.png" alt="FCG Consulting" class="footer-dark-logo">
+        <p class="footer-dark-tagline">Strategy first.<br>Brands built to last.</p>
+      </div>
+      <div class="footer-dark-cols">
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Services</p>
+          <nav>
+            <a href="web-design">Web Design &amp; Dev</a>
+            <a href="social-media">Social Media</a>
+            <a href="brand-design">Brand &amp; Design</a>
+            <a href="ai-consulting">AI Consulting</a>
+            <a href="analytics">Analytics</a>
+            <a href="drone-aerial">Drone &amp; Aerial</a>
+          </nav>
+        </div>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Company</p>
+          <nav>
+            <a href="../insights">Insights</a>
+            <a href="../contact">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Contact</p>
+          <nav>
+            <a href="mailto:info@fcgconsulting.ca">info@fcgconsulting.ca</a>
+            <a href="https://capital-consulting-k9d8.vercel.app" target="_blank">Client Portal</a>
+          </nav>
+          <p class="footer-dark-col-title" style="margin-top:1rem;">Ottawa, ON</p>
+          <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;">Serving Clients Nationwide</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-dark-bottom">
+      <p>© 2026 FCG Consulting. All rights reserved.</p>
+      <p>Strategic Marketing — Canada</p>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>
