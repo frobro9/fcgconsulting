@@ -3869,36 +3869,36 @@ textarea { resize: vertical; }
    ============================================================ */
 
 .svc-simple-section {
-  padding: 4rem 2rem;
-  background: var(--stone);
+  padding: 2rem 2rem 3rem;
+  background: #0b0f14;
 }
 .svc-simple-inner {
-  max-width: 680px;
+  max-width: var(--max-w);
   margin: 0 auto;
 }
-.svc-offer-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.svc-offer-grid {
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  flex-wrap: wrap;
+  gap: 0.65rem;
 }
-.svc-offer-list li {
+.svc-offer-box {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.05rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: var(--ink);
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border-light);
-  padding-left: 1.5rem;
-  position: relative;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  cursor: default;
+  transition: background 0.22s, border-color 0.22s, transform 0.22s, color 0.22s, box-shadow 0.22s;
 }
-.svc-offer-list li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: #0b223a;
+.svc-offer-box:hover {
+  background: rgba(255,255,255,0.13);
+  border-color: rgba(255,255,255,0.35);
+  transform: translateY(-4px);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
 .svc-project-section {
