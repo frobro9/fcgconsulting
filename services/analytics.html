@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FCG Consulting — Analytics Dashboard. Custom-built dashboards so you see exactly how your business is performing — traffic, conversions, ad spend, and more.">
+  <title>Analytics Dashboard — FCG Consulting</title>
+  <link rel="icon" type="image/png" href="../assets/FAVICON.png">
+  <link rel="apple-touch-icon" href="../assets/FAVICON.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+
+  <nav id="nav" class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="/" class="nav-logo" aria-label="FCG Consulting">
+          <img src="../assets/FCGCONSULTING.png" alt="FCG Consulting" class="nav-logo-img">
+        </a>
+      </div>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="../services">Services</a></li>
+          <li><a href="../work">Our Work</a></li>
+          <li><a href="../insights">Insights</a></li>
+        </ul>
+        <a href="../contact" class="nav-btn-outline">Contact</a>
+        <a href="https://capital-consulting-k9d8.vercel.app" class="nav-btn-solid" target="_blank">Client Portal</a>
+      </div>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu" aria-hidden="true">
+      <a href="../services" class="mobile-link">Services</a>
+      <a href="../work" class="mobile-link">Our Work</a>
+      <a href="../insights" class="mobile-link">Insights</a>
+      <a href="../contact" class="mobile-link mobile-cta">Contact</a>
+      <a href="https://capital-consulting-k9d8.vercel.app" class="mobile-link mobile-cta" target="_blank">Client Portal</a>
+    </div>
+  </nav>
+
+  <section class="svc-detail-hero" style="background:#1a3d5c;">
+    <div class="svc-detail-hero-inner">
+      <a href="../services" class="svc-back">← All Services</a>
+      <p class="svc-detail-tag">Analytics Dashboard</p>
+      <h1 class="svc-detail-title">Stop guessing.<br><em>Start knowing.</em></h1>
+      <p class="svc-detail-sub">We build custom dashboards that pull your marketing, sales, and ad data into one place — so you can make decisions based on what's actually happening, not gut feel.</p>
+      <a href="../contact" class="svc-detail-cta">Get a free audit →</a>
+    </div>
+  </section>
+
+  <section class="svc-detail-section">
+    <div class="svc-detail-inner">
+      <div class="svc-detail-col">
+        <h2 class="svc-detail-heading">What's included</h2>
+        <ul class="svc-detail-list">
+          <li>Custom dashboard design &amp; build</li>
+          <li>Integration with Google Analytics, Meta Ads, Google Ads</li>
+          <li>Marketing attribution &amp; funnel tracking</li>
+          <li>Real-time revenue &amp; lead reporting</li>
+          <li>Ad spend &amp; ROAS tracking</li>
+          <li>Monthly performance reports</li>
+          <li>KPI goal setting &amp; benchmarking</li>
+          <li>Dashboard training &amp; handoff</li>
+        </ul>
+      </div>
+      <div class="svc-detail-col">
+        <h2 class="svc-detail-heading">Who it's for</h2>
+        <ul class="svc-detail-list">
+          <li>Businesses spending on ads without knowing what's working</li>
+          <li>Teams drowning in spreadsheets and manual reports</li>
+          <li>Founders who want one clear view of their business performance</li>
+          <li>Companies preparing for growth and needing data infrastructure</li>
+        </ul>
+        <div class="svc-detail-stat-row">
+          <div class="svc-detail-stat">
+            <span class="svc-stat-num">3.2×</span>
+            <span class="svc-stat-label">Avg. ROAS improvement after attribution fix</span>
+          </div>
+          <div class="svc-detail-stat">
+            <span class="svc-stat-num">12×</span>
+            <span class="svc-stat-label">Avg. ROI reported by clients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-dark">
+    <div class="cta-dark-inner">
+      <h2 class="cta-dark-title">Ready to see your business clearly?</h2>
+      <p class="cta-dark-sub">Enter your website and we'll reach out within 24 hours to discuss your analytics setup.</p>
+      <form onsubmit="handleQuoteSubmit(event)">
+        <div class="hero-input-wrap hero-input-wrap--dark">
+          <span class="hero-input-prefix">https://</span>
+          <input type="text" class="hero-input" placeholder="yourwebsite.com" autocomplete="off" spellcheck="false"/>
+          <button type="submit" class="hero-input-btn">Get My Free Quote</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer-dark">
+    <div class="footer-dark-top">
+      <div class="footer-dark-brand">
+        <img src="../assets/FCGCONSULTING.png" alt="FCG Consulting" class="footer-dark-logo">
+        <p class="footer-dark-tagline">Strategy first.<br>Brands built to last.</p>
+      </div>
+      <div class="footer-dark-cols">
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Services</p>
+          <nav>
+            <a href="web-design">Web Design &amp; Dev</a>
+            <a href="social-media">Social Media</a>
+            <a href="brand-design">Brand &amp; Design</a>
+            <a href="ai-consulting">AI Consulting</a>
+            <a href="analytics">Analytics</a>
+            <a href="drone-aerial">Drone &amp; Aerial</a>
+          </nav>
+        </div>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Company</p>
+          <nav>
+            <a href="../insights">Insights</a>
+            <a href="../contact">Contact</a>
+          </nav>
+        </div>
+        <div class="footer-dark-col">
+          <p class="footer-dark-col-title">Contact</p>
+          <nav>
+            <a href="mailto:info@fcgconsulting.ca">info@fcgconsulting.ca</a>
+            <a href="https://capital-consulting-k9d8.vercel.app" target="_blank">Client Portal</a>
+          </nav>
+          <p class="footer-dark-col-title" style="margin-top:1rem;">Ottawa, ON</p>
+          <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;">Serving Clients Nationwide</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-dark-bottom">
+      <p>© 2026 FCG Consulting. All rights reserved.</p>
+      <p>Strategic Marketing — Canada</p>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>
