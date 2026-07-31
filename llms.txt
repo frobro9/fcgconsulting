@@ -17,7 +17,6 @@ Capital Consulting is a marketing and brand-building firm based in Ottawa, ON, s
 - [Home](https://capitalconsulting.ca/)
 - [Services](https://capitalconsulting.ca/services)
 - [About Us](https://capitalconsulting.ca/about)
-- [Our Work](https://capitalconsulting.ca/work)
 - [Insights](https://capitalconsulting.ca/insights)
 - [Contact](https://capitalconsulting.ca/contact)
 
