@@ -29,14 +29,27 @@ The tracker fetches the URL and parses the response:
    above.
 2. **Best Buy Canada** product links are rewritten to their price API automatically
    (`src/sites.ts` — add a rule there for another store).
-3. **Rendering-scraper fallback:** if the plain fetch is blocked (403/429) or yields no price and
-   `SCRAPER_API_KEY` is set, the check retries once through a headless-browser scraping API with a
-   premium proxy. `SCRAPER_API_PROVIDER` = `scrapingbee` (default), `scraperapi`, or `scrapingant`.
+3. **Headless-browser fallback:** if the plain fetch is blocked (403/429) or yields no price and
+   `SCRAPER_API_KEY` is set, the check retries once through a real browser. `SCRAPER_API_PROVIDER`:
+   - `cloudflare` (default) — Cloudflare **Browser Rendering** REST API. Free tier, no third-party
+     signup. `SCRAPER_API_KEY` = a Cloudflare API token with *Browser Rendering* permission;
+     `SCRAPER_ACCOUNT_ID` is the account id (already set in `wrangler.jsonc`).
+   - `scrapingbee` / `scraperapi` / `scrapingant` — third-party scraping APIs with a premium proxy,
+     for the few sites Cloudflare's browser can't get past. `SCRAPER_API_KEY` = that service's key.
 
-So: for hard sites (Amazon, airlines, anything behind Cloudflare/Akamai/PerimeterX, or pure
-client-rendered prices), set **one** `SCRAPER_API_KEY` secret and everything falls back to it
-automatically; cheap sites still use the free plain fetch. Without a key, a blocked/unparseable
-fetch shows an `error` status with an explanation rather than a wrong price.
+So: for hard sites (Amazon, airlines, anything behind Akamai/PerimeterX, or pure client-rendered
+prices), set **one** `SCRAPER_API_KEY` secret and everything falls back to it automatically; cheap
+sites still use the free plain fetch. Without a key, a blocked/unparseable fetch shows an `error`
+status with an explanation rather than a wrong price.
+
+### Get the Cloudflare API token
+
+dash.cloudflare.com → **My Profile → API Tokens → Create Token → Custom token**: permission
+**Account · Browser Rendering · Edit**, scoped to your account. Then:
+
+```bash
+npx wrangler secret put SCRAPER_API_KEY   # paste the token
+```
 
 ## Alert rule
 

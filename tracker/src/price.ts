@@ -13,35 +13,42 @@ export type FetchResult =
  * Fetch the URL's content.
  *
  * `mode: 'plain'` is a direct fetch with a browser User-Agent (free, fast).
- * `mode: 'scraper'` routes through a JS-rendering scraping API with a premium
- * proxy — used as a fallback when the plain fetch is blocked or yields no
- * price. Requires SCRAPER_API_KEY; `SCRAPER_API_PROVIDER` picks the service
- * (`scrapingbee` default, `scraperapi`, `scrapingant`).
+ * `mode: 'render'` routes through a headless browser — the fallback when the
+ * plain fetch is blocked or yields no price. `SCRAPER_API_PROVIDER` picks it:
+ *   - `cloudflare` (default): Cloudflare Browser Rendering REST API. Needs
+ *     SCRAPER_API_KEY = a Cloudflare API token with Browser Rendering access,
+ *     plus SCRAPER_ACCOUNT_ID. Free tier, no third-party signup.
+ *   - `scrapingbee` / `scraperapi` / `scrapingant`: third-party scraping APIs
+ *     with a premium proxy. Needs SCRAPER_API_KEY = that service's key.
  */
 export async function fetchContent(
   rawUrl: string,
   env: Bindings,
-  mode: 'plain' | 'scraper' = 'plain',
+  mode: 'plain' | 'render' = 'plain',
 ): Promise<FetchResult> {
   const url = toApiUrl(rawUrl)
 
-  if (mode === 'scraper') {
+  if (mode === 'render') {
     if (!env.SCRAPER_API_KEY) {
       return { ok: false, via: 'scraper', error: 'SCRAPER_API_KEY not set' }
     }
-    const provider = env.SCRAPER_API_PROVIDER || 'scrapingbee'
-    const endpoint = buildScraperUrl(provider, url, env.SCRAPER_API_KEY)
-    if (!endpoint) {
-      return { ok: false, via: 'scraper', error: `Unknown SCRAPER_API_PROVIDER "${provider}"` }
+    const provider = env.SCRAPER_API_PROVIDER || 'cloudflare'
+    const req = buildRenderRequest(provider, url, env)
+    if (!req) {
+      return { ok: false, via: 'scraper', error: `SCRAPER_API_PROVIDER "${provider}" not supported` }
     }
     try {
-      const res = await fetch(endpoint, { signal: AbortSignal.timeout(60_000) })
+      const res = await fetch(req.endpoint, { ...req.init, signal: AbortSignal.timeout(60_000) })
       if (!res.ok) {
-        return { ok: false, via: 'scraper', error: `Scraper API responded ${res.status}` }
+        return { ok: false, via: 'scraper', error: `${provider} responded ${res.status}` }
       }
-      return { ok: true, via: 'scraper', body: await res.text() }
+      const body = req.unwrap ? req.unwrap(await res.text()) : await res.text()
+      if (body == null) {
+        return { ok: false, via: 'scraper', error: `${provider} returned no content` }
+      }
+      return { ok: true, via: 'scraper', body }
     } catch (err) {
-      return { ok: false, via: 'scraper', error: `Scraper fetch failed: ${errMsg(err)}` }
+      return { ok: false, via: 'scraper', error: `Render fetch failed: ${errMsg(err)}` }
     }
   }
 
@@ -79,15 +86,53 @@ function errMsg(err: unknown): string {
   return err instanceof Error ? err.message : String(err)
 }
 
-function buildScraperUrl(provider: string, target: string, key: string): string | null {
+type RenderRequest = {
+  endpoint: string
+  init?: RequestInit
+  /** Pull the HTML out of a JSON envelope, if the provider wraps it. */
+  unwrap?: (raw: string) => string | null
+}
+
+function buildRenderRequest(
+  provider: string,
+  target: string,
+  env: Bindings,
+): RenderRequest | null {
+  const key = env.SCRAPER_API_KEY as string
   const u = encodeURIComponent(target)
   switch (provider) {
+    case 'cloudflare': {
+      const acct = env.SCRAPER_ACCOUNT_ID
+      if (!acct) return null
+      return {
+        endpoint: `https://api.cloudflare.com/client/v4/accounts/${acct}/browser-rendering/content`,
+        init: {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: target, rejectResourceTypes: ['image', 'media', 'font'] }),
+        },
+        unwrap: (raw) => {
+          try {
+            const j = JSON.parse(raw) as { success?: boolean; result?: string }
+            return j.success && typeof j.result === 'string' ? j.result : null
+          } catch {
+            return null
+          }
+        },
+      }
+    }
     case 'scrapingbee':
-      return `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&premium_proxy=true&country_code=ca`
+      return {
+        endpoint: `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&premium_proxy=true&country_code=ca`,
+      }
     case 'scraperapi':
-      return `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&premium=true&country_code=ca`
+      return {
+        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&premium=true&country_code=ca`,
+      }
     case 'scrapingant':
-      return `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true&proxy_type=residential&proxy_country=CA`
+      return {
+        endpoint: `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true&proxy_type=residential&proxy_country=CA`,
+      }
     default:
       return null
   }
