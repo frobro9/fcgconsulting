@@ -11,12 +11,12 @@ function layout(title: string, body: Html | Html[], opts: { signedIn?: boolean }
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="noindex" />
-        <title>${title} · FCG Tracker</title>
+        <title>${title} · Camify</title>
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
         <header class="topbar">
-          <a class="brand" href="/trackers">FCG Price Tracker</a>
+          <a class="brand" href="/trackers">Camify</a>
           ${opts.signedIn !== false
             ? html`<form method="post" action="/logout"><button class="link">Sign out</button></form>`
             : ''}

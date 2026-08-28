@@ -1,4 +1,4 @@
-# FCG Price Tracker
+# Camify
 
 A standalone Cloudflare Worker that watches flight itineraries (Kiwi.com) and product pages,
 re-checks their price every few hours, and emails when the price drops.
