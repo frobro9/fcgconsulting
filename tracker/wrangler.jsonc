@@ -8,39 +8,36 @@
 
   "assets": { "directory": "./public", "binding": "ASSETS" },
 
-  // Run `wrangler d1 create fcg-tracker` and paste the returned database_id here.
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "fcg-tracker",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "10779bee-fbeb-4cf0-ad9b-e3493c5eaab3"
     }
   ],
 
-  // Email Routing must be enabled on the sending domain, and the destination
-  // address below must be added + verified in the dashboard
+  // Email Routing must be enabled on fcgconsulting.ca, and the destination
+  // address below must be added + verified there
   // (Email > Email Routing > Destination addresses).
   "send_email": [
     {
       "name": "EMAIL",
-      "destination_address": "REPLACE_WITH_VERIFIED_ALERT_RECIPIENT"
+      "destination_address": "team@fcgconsulting.ca"
     }
   ],
 
   // Price checks run every 6 hours.
   "triggers": { "crons": ["0 */6 * * *"] },
 
-  // The marketing site's "Client Portal" link points at https://portal.fcgconsulting.com.
-  // Uncomment to have `wrangler deploy` bind that custom domain (the fcgconsulting.com
-  // zone must be on this Cloudflare account). Otherwise add it in the dashboard:
-  // Workers & Pages > fcg-tracker > Settings > Domains & Routes.
-  // "routes": [{ "pattern": "portal.fcgconsulting.com", "custom_domain": true }],
+  // Bound as a Worker custom domain (the fcgconsulting.ca zone is on this account).
+  // The marketing site's "Client Portal" link points here.
+  "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
 
   "vars": {
-    // Must be an address on a domain you control that has Email Routing enabled.
-    "ALERT_FROM": "alerts@fcgconsulting.com",
+    // Any address on a domain with Email Routing enabled on this account.
+    "ALERT_FROM": "alerts@fcgconsulting.ca",
     // Must match the verified `destination_address` above.
-    "ALERT_TO": "REPLACE_WITH_VERIFIED_ALERT_RECIPIENT",
+    "ALERT_TO": "team@fcgconsulting.ca",
     "SCRAPER_API_PROVIDER": "scrapingbee"
   }
 
