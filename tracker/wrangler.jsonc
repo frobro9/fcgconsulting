@@ -1,0 +1,52 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fcg-tracker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fcg-tracker",
+      "database_id": "10779bee-fbeb-4cf0-ad9b-e3493c5eaab3"
+    }
+  ],
+
+  // Alerts go out via Resend (RESEND_API_KEY secret) because fcgconsulting.ca
+  // runs Microsoft 365 mail — enabling Cloudflare Email Routing would replace
+  // its MX and break inboxes. This send_email binding is only the fallback used
+  // when RESEND_API_KEY is unset; it stays inert without Email Routing.
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "camfrohar@fcgconsulting.ca"
+    }
+  ],
+
+  // Price checks run every 6 hours.
+  "triggers": { "crons": ["0 */6 * * *"] },
+
+  // fcgconsulting.ca is a Cloudflare zone, so `wrangler deploy` binds this
+  // custom domain (auto SSL). The marketing site's "Client Portal" link points here.
+  "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
+
+  "vars": {
+    // Resend sender. Use onboarding@resend.dev until fcgconsulting.ca is a
+    // verified sending domain in Resend, then switch to alerts@fcgconsulting.ca.
+    "ALERT_FROM": "onboarding@resend.dev",
+    "ALERT_TO": "camfrohar@fcgconsulting.ca",
+    "SCRAPER_API_PROVIDER": "scrapingbee"
+  }
+
+  // Secrets — set with `wrangler secret put <NAME>` (never commit these):
+  //   ADMIN_USERNAME       e.g. admin
+  //   ADMIN_PASSWORD       e.g. admin  (weak — change after first login)
+  //   SESSION_SECRET       long random string
+  //   CRON_TOKEN           random string; guards POST /cron/run
+  //   RESEND_API_KEY       enables the Resend alert path (recommended here)
+  //   SCRAPER_API_KEY      optional; enables JS-rendering scrape fallback
+}

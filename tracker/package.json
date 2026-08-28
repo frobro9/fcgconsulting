@@ -1,0 +1,24 @@
+{
+  "name": "fcg-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --remote",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:schema": "wrangler d1 execute fcg-tracker --remote --file=schema.sql",
+    "db:schema:local": "wrangler d1 execute fcg-tracker --local --file=schema.sql",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "hono": "^4.6.14",
+    "mimetext": "^3.0.24",
+    "node-html-parser": "^6.1.13"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260828.1",
+    "typescript": "^5.7.2",
+    "wrangler": "^4.127.1"
+  }
+}

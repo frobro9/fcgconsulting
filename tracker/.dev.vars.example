@@ -1,0 +1,9 @@
+# Copy to .dev.vars (gitignored) for `wrangler dev`.
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin
+SESSION_SECRET=dev-secret-change-me
+CRON_TOKEN=dev-cron-token
+# Optional; only needed to exercise the email path locally. Must match
+# send_email.destination_address + vars.ALERT_TO in wrangler.jsonc.
+# ALERT_FROM=alerts@fcgconsulting.com
+# ALERT_TO=you@example.com
