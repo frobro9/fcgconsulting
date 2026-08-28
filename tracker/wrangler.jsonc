@@ -22,7 +22,7 @@
   "send_email": [
     {
       "name": "EMAIL",
-      "destination_address": "team@fcgconsulting.ca"
+      "destination_address": "camfrohar@fcgconsulting.ca"
     }
   ],
 
@@ -37,7 +37,7 @@
     // Any address on a domain with Email Routing enabled on this account.
     "ALERT_FROM": "alerts@fcgconsulting.ca",
     // Must match the verified `destination_address` above.
-    "ALERT_TO": "team@fcgconsulting.ca",
+    "ALERT_TO": "camfrohar@fcgconsulting.ca",
     "SCRAPER_API_PROVIDER": "scrapingbee"
   }
 
