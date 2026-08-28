@@ -7,6 +7,7 @@ export type Bindings = {
   ALERT_FROM: string
   ALERT_TO: string
   SCRAPER_API_PROVIDER?: string
+  SCRAPER_ACCOUNT_ID?: string
 
   // secrets
   ADMIN_USERNAME: string

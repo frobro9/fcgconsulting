@@ -39,7 +39,11 @@
     // (DKIM resend._domainkey + send.fcgconsulting.ca SPF/MX — M365 MX untouched).
     "ALERT_FROM": "alerts@fcgconsulting.ca",
     "ALERT_TO": "camfrohar@fcgconsulting.ca",
-    "SCRAPER_API_PROVIDER": "scrapingbee"
+    // Headless-browser fallback for blocked / JS-only sites.
+    //   cloudflare  -> Cloudflare Browser Rendering (free tier, in-ecosystem)
+    //   scrapingbee | scraperapi | scrapingant -> third-party scraping APIs
+    "SCRAPER_API_PROVIDER": "cloudflare",
+    "SCRAPER_ACCOUNT_ID": "cf1de50389d6ef075bafb97c3ed4a81c"
   }
 
   // Secrets — set with `wrangler secret put <NAME>` (never commit these):
@@ -47,6 +51,8 @@
   //   ADMIN_PASSWORD       e.g. admin  (weak — change after first login)
   //   SESSION_SECRET       long random string
   //   CRON_TOKEN           random string; guards POST /cron/run
-  //   RESEND_API_KEY       enables the Resend alert path (recommended here)
-  //   SCRAPER_API_KEY      optional; enables JS-rendering scrape fallback
+  //   RESEND_API_KEY       enables the Resend alert path
+  //   SCRAPER_API_KEY      enables the render fallback. For provider "cloudflare"
+  //                        this is a Cloudflare API token with Browser Rendering
+  //                        permission; for the others it's that service's key.
 }

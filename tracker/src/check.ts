@@ -33,7 +33,7 @@ async function readPrice(env: Bindings, t: Tracker): Promise<PriceResult> {
   // 2. Retry through the rendering scraper if the plain attempt was blocked or
   //    produced no price and a key is configured.
   if (!r.ok && env.SCRAPER_API_KEY && f.via === 'plain') {
-    f = await fetchContent(t.url, env, 'scraper')
+    f = await fetchContent(t.url, env, 'render')
     r = f.ok ? parsePrice(f.body, t.price_selector, t.currency) : { ok: false, error: f.error }
   }
   return r
