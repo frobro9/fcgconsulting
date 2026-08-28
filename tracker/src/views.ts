@@ -93,10 +93,10 @@ function trackerFormFields(
     </label>
     <p class="hint">
       Leave blank to auto-detect — it reads JSON-LD and embedded page data (Walmart etc.), or a
-      JSON API response. Otherwise give a CSS selector (right-click the price → Inspect → Copy →
-      Copy selector) or a JSON field path like <code>0.salePrice</code>. Best Buy Canada links are
-      converted to the price API automatically; other hard-blocked stores need their own API URL
-      (DevTools → Network → XHR) or a <code>SCRAPER_API_KEY</code>.
+      JSON API response, and fills in a built-in selector for known stores (Amazon) on save.
+      Otherwise give a CSS selector (right-click the price → Inspect → Copy → Copy selector) or a
+      JSON field path like <code>0.salePrice</code>. Best Buy Canada links are converted to the
+      price API automatically.
     </p>
     <div class="two">
       <label>Currency<input name="currency" value="${v.currency ?? 'CAD'}" maxlength="3" /></label>
