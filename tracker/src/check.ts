@@ -1,6 +1,7 @@
 import { applyCheckToTracker, recordCheck } from './db'
 import { sendPriceAlert } from './email'
 import { fetchContent, parsePrice, renderTierConfigured } from './price'
+import { defaultSelector } from './sites'
 import type { Bindings, PriceResult, Tracker } from './types'
 
 export type CheckOutcome = {
@@ -24,7 +25,8 @@ export type CheckOutcome = {
  * only fire on a further drop.
  */
 async function readPrice(env: Bindings, t: Tracker): Promise<PriceResult> {
-  const parse = (body: string) => parsePrice(body, t.price_selector, t.currency)
+  const selector = t.price_selector || defaultSelector(t.url)
+  const parse = (body: string) => parsePrice(body, selector, t.currency)
 
   // 1. Plain fetch.
   let f = await fetchContent(t.url, env, 'plain')

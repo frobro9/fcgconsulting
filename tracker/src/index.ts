@@ -12,7 +12,7 @@ import {
   type NewTracker,
   type TrackerUpdate,
 } from './db'
-import { toApiUrl } from './sites'
+import { defaultSelector, toApiUrl } from './sites'
 import type { Bindings } from './types'
 import { detailPage, listPage, loginPage, newTrackerPage } from './views'
 
@@ -163,7 +163,8 @@ function parseTrackerForm(
   const label = str(body, 'label')
   // Rewrite recognized retailer product pages to their JSON price API.
   const url = toApiUrl(str(body, 'url'))
-  const selectorRaw = str(body, 'price_selector')
+  // Blank selector on a known store (e.g. Amazon) gets that store's default.
+  const selectorRaw = str(body, 'price_selector') || defaultSelector(url) || ''
   const currency = (str(body, 'currency') || 'CAD').toUpperCase().slice(0, 3)
   const target_price = numOrNull(str(body, 'target_price'))
   const intervalRaw = Number(str(body, 'interval_hours'))
