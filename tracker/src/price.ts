@@ -1,30 +1,58 @@
 import { parse, type HTMLElement } from 'node-html-parser'
+import { toApiUrl } from './sites'
 import type { Bindings, PriceResult } from './types'
 
 const DESKTOP_UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
 
-/**
- * Fetch the page HTML. If SCRAPER_API_KEY is set, route through a JS-rendering
- * scraping API (default provider: ScrapingBee); otherwise a plain fetch with a
- * realistic browser User-Agent.
- */
-export async function fetchHtml(
-  url: string,
-  env: Bindings,
-): Promise<{ ok: true; html: string } | { ok: false; error: string }> {
-  try {
-    if (env.SCRAPER_API_KEY) {
-      const provider = env.SCRAPER_API_PROVIDER || 'scrapingbee'
-      const endpoint = buildScraperUrl(provider, url, env.SCRAPER_API_KEY)
-      if (!endpoint) return { ok: false, error: `Unknown SCRAPER_API_PROVIDER "${provider}"` }
-      const res = await fetch(endpoint, { signal: AbortSignal.timeout(45_000) })
-      if (!res.ok) {
-        return { ok: false, error: `Scraper API responded ${res.status}` }
-      }
-      return { ok: true, html: await res.text() }
-    }
+export type FetchResult =
+  | { ok: true; body: string; via: 'plain' | 'scraper' }
+  | { ok: false; error: string; via: 'plain' | 'scraper' }
 
+/**
+ * Fetch the URL's content.
+ *
+ * `mode: 'plain'` is a direct fetch with a browser User-Agent (free, fast).
+ * `mode: 'render'` routes through a headless browser — the fallback when the
+ * plain fetch is blocked or yields no price. `SCRAPER_API_PROVIDER` picks it:
+ *   - `cloudflare` (default): Cloudflare Browser Rendering REST API. Needs
+ *     SCRAPER_API_KEY = a Cloudflare API token with Browser Rendering access,
+ *     plus SCRAPER_ACCOUNT_ID. Free tier, no third-party signup.
+ *   - `scrapingbee` / `scraperapi` / `scrapingant`: third-party scraping APIs
+ *     with a premium proxy. Needs SCRAPER_API_KEY = that service's key.
+ */
+export async function fetchContent(
+  rawUrl: string,
+  env: Bindings,
+  mode: 'plain' | 'render' = 'plain',
+): Promise<FetchResult> {
+  const url = toApiUrl(rawUrl)
+
+  if (mode === 'render') {
+    if (!env.SCRAPER_API_KEY) {
+      return { ok: false, via: 'scraper', error: 'SCRAPER_API_KEY not set' }
+    }
+    const provider = env.SCRAPER_API_PROVIDER || 'cloudflare'
+    const req = buildRenderRequest(provider, url, env)
+    if (!req) {
+      return { ok: false, via: 'scraper', error: `SCRAPER_API_PROVIDER "${provider}" not supported` }
+    }
+    try {
+      const res = await fetch(req.endpoint, { ...req.init, signal: AbortSignal.timeout(60_000) })
+      if (!res.ok) {
+        return { ok: false, via: 'scraper', error: `${provider} responded ${res.status}` }
+      }
+      const body = req.unwrap ? req.unwrap(await res.text()) : await res.text()
+      if (body == null) {
+        return { ok: false, via: 'scraper', error: `${provider} returned no content` }
+      }
+      return { ok: true, via: 'scraper', body }
+    } catch (err) {
+      return { ok: false, via: 'scraper', error: `Render fetch failed: ${errMsg(err)}` }
+    }
+  }
+
+  try {
     const res = await fetch(url, {
       redirect: 'follow',
       signal: AbortSignal.timeout(20_000),
@@ -35,48 +63,108 @@ export async function fetchHtml(
       },
     })
     if (!res.ok) {
+      const blocked = res.status === 403 || res.status === 429
       return {
         ok: false,
+        via: 'plain',
         error: `Site responded ${res.status}${
-          res.status === 403 || res.status === 429
-            ? ' (bot-blocked — set SCRAPER_API_KEY to use a rendering scraper)'
+          blocked
+            ? env.SCRAPER_API_KEY
+              ? ' (bot-blocked)'
+              : ' (bot-blocked — set the SCRAPER_API_KEY secret to fetch it through a headless browser)'
             : ''
         }`,
       }
     }
-    return { ok: true, html: await res.text() }
+    return { ok: true, via: 'plain', body: await res.text() }
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err)
-    return { ok: false, error: `Fetch failed: ${msg}` }
+    return { ok: false, via: 'plain', error: `Fetch failed: ${errMsg(err)}` }
   }
 }
 
-function buildScraperUrl(provider: string, target: string, key: string): string | null {
+function errMsg(err: unknown): string {
+  return err instanceof Error ? err.message : String(err)
+}
+
+type RenderRequest = {
+  endpoint: string
+  init?: RequestInit
+  /** Pull the HTML out of a JSON envelope, if the provider wraps it. */
+  unwrap?: (raw: string) => string | null
+}
+
+function buildRenderRequest(
+  provider: string,
+  target: string,
+  env: Bindings,
+): RenderRequest | null {
+  const key = env.SCRAPER_API_KEY as string
   const u = encodeURIComponent(target)
   switch (provider) {
+    case 'cloudflare': {
+      const acct = env.SCRAPER_ACCOUNT_ID
+      if (!acct) return null
+      return {
+        endpoint: `https://api.cloudflare.com/client/v4/accounts/${acct}/browser-rendering/content`,
+        init: {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: target, rejectResourceTypes: ['image', 'media', 'font'] }),
+        },
+        unwrap: (raw) => {
+          try {
+            const j = JSON.parse(raw) as { success?: boolean; result?: string }
+            return j.success && typeof j.result === 'string' ? j.result : null
+          } catch {
+            return null
+          }
+        },
+      }
+    }
     case 'scrapingbee':
-      return `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true`
+      return {
+        endpoint: `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&premium_proxy=true&country_code=ca`,
+      }
     case 'scraperapi':
-      return `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true`
+      return {
+        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&premium=true&country_code=ca`,
+      }
     case 'scrapingant':
-      return `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true`
+      return {
+        endpoint: `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true&proxy_type=residential&proxy_country=CA`,
+      }
     default:
       return null
   }
 }
 
 /**
- * Extract a price from HTML. Uses the CSS selector when provided; otherwise
- * falls back to JSON-LD Product/Offer data embedded in the page.
+ * Extract a price from a fetched response.
+ *
+ * - JSON body (e.g. a store's product/offers API): the selector is treated as a
+ *   path (`offers.0.salePrice`, `data.price`) or a bare key to deep-search; blank
+ *   auto-detects common price fields.
+ * - HTML body: the selector is a CSS selector; blank falls back to JSON-LD
+ *   Product/Offer data embedded in the page.
  */
 export function parsePrice(
-  htmlText: string,
+  body: string,
   selector: string | null,
   fallbackCurrency: string,
 ): PriceResult {
+  const trimmed = body.trimStart()
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    try {
+      const data = JSON.parse(trimmed)
+      return priceFromJson(data, selector, fallbackCurrency)
+    } catch {
+      // Not valid JSON — fall through and treat as HTML.
+    }
+  }
+
   let root: HTMLElement
   try {
-    root = parse(htmlText)
+    root = parse(body)
   } catch {
     return { ok: false, error: 'Could not parse page HTML' }
   }
@@ -95,11 +183,133 @@ export function parsePrice(
   const ld = priceFromJsonLd(root)
   if (ld) return { ok: true, price: ld.price, currency: ld.currency || fallbackCurrency }
 
+  // Next.js / framework state blobs embedded in the page (Walmart, many others).
+  for (const script of [
+    root.querySelector('script#__NEXT_DATA__'),
+    ...root.querySelectorAll('script[type="application/json"]'),
+  ]) {
+    if (!script) continue
+    let data: unknown
+    try {
+      data = JSON.parse(script.text)
+    } catch {
+      continue
+    }
+    const hit = priceFromJson(data, null, fallbackCurrency)
+    if (hit.ok) return hit
+  }
+
   return {
     ok: false,
-    error: 'No price selector set and no JSON-LD offer found — add a CSS selector for the price',
+    error: 'No price found — add a CSS selector (HTML) or field path (JSON) for the price',
   }
 }
+
+/* --------------------------- JSON API responses --------------------------- */
+
+// Checked in order when no selector is given.
+const PRICE_KEYS = [
+  'salePrice',
+  'currentPrice',
+  'finalPrice',
+  'ourPrice',
+  'yourPrice',
+  'price',
+  'lowPrice',
+  'listPrice',
+  'regularPrice',
+  'priceValue',
+  'amount',
+]
+
+function priceFromJson(
+  data: unknown,
+  selector: string | null,
+  fallbackCurrency: string,
+): PriceResult {
+  const currency = jsonCurrency(data) || fallbackCurrency
+
+  if (selector) {
+    const raw = resolveJsonPath(data, selector)
+    if (raw == null) {
+      return { ok: false, error: `Path "${selector}" not found in the JSON response` }
+    }
+    const price = coercePrice(raw)
+    if (price == null) {
+      return { ok: false, error: `Value at "${selector}" ("${JSON.stringify(raw).slice(0, 40)}") is not a price` }
+    }
+    return { ok: true, price, currency }
+  }
+
+  for (const key of PRICE_KEYS) {
+    const raw = deepFind(data, key)
+    const price = coercePrice(raw)
+    if (price != null && price > 0) return { ok: true, price, currency }
+  }
+
+  return {
+    ok: false,
+    error:
+      'JSON response has no recognizable price field — set the selector to the price path ' +
+      '(e.g. "0.salePrice" or "data.price")',
+  }
+}
+
+/** number | "$12.34" | { price: 12.34 } | { amount: "12.34" } -> 12.34 */
+function coercePrice(raw: unknown, depth = 0): number | null {
+  if (raw == null || depth > 3) return null
+  if (typeof raw === 'number') return Number.isFinite(raw) && raw > 0 ? raw : null
+  if (typeof raw === 'string') return normalisePrice(raw)
+  if (typeof raw === 'object' && !Array.isArray(raw)) {
+    for (const k of ['price', 'amount', 'value', 'priceString', 'displayValue', 'current']) {
+      const n = coercePrice((raw as Record<string, unknown>)[k], depth + 1)
+      if (n != null) return n
+    }
+  }
+  return null
+}
+
+/** Resolve "a.b.0.c" / "a[0].b"; a single bare segment also deep-searches. */
+function resolveJsonPath(obj: unknown, path: string): unknown {
+  const parts = path
+    .replace(/\[(\w+)\]/g, '.$1')
+    .split('.')
+    .filter(Boolean)
+  if (parts.length === 0) return undefined
+  if (parts.length === 1) {
+    const direct = (obj as Record<string, unknown> | null)?.[parts[0]]
+    return direct !== undefined ? direct : deepFind(obj, parts[0])
+  }
+  let cur: unknown = obj
+  for (const p of parts) {
+    if (cur == null || typeof cur !== 'object') return undefined
+    cur = (cur as Record<string, unknown>)[p]
+  }
+  return cur
+}
+
+/** First value found for `key` anywhere in the structure (object-key order). */
+function deepFind(node: unknown, key: string, depth = 0): unknown {
+  if (depth > 8 || node == null || typeof node !== 'object') return undefined
+  if (!Array.isArray(node) && Object.prototype.hasOwnProperty.call(node, key)) {
+    return (node as Record<string, unknown>)[key]
+  }
+  for (const v of Object.values(node as Record<string, unknown>)) {
+    const hit = deepFind(v, key, depth + 1)
+    if (hit !== undefined) return hit
+  }
+  return undefined
+}
+
+function jsonCurrency(data: unknown): string | null {
+  for (const key of ['priceCurrency', 'currency', 'currencyCode', 'currencyIsoCode', 'currencyUnit']) {
+    const v = deepFind(data, key)
+    if (typeof v === 'string' && /^[A-Za-z]{3}$/.test(v)) return v.toUpperCase()
+  }
+  return null
+}
+
+/* ------------------------------- HTML JSON-LD ---------------------------- */
 
 function priceFromJsonLd(root: HTMLElement): { price: number; currency: string | null } | null {
   const blocks = root.querySelectorAll('script[type="application/ld+json"]')

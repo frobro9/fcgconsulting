@@ -88,12 +88,15 @@ function trackerFormFields(
     <label>URL
       <input name="url" type="url" required value="${v.url ?? ''}" placeholder="https://…" />
     </label>
-    <label>Price CSS selector <span class="muted">(blank = auto-read JSON-LD)</span>
-      <input name="price_selector" value="${v.price_selector ?? ''}" placeholder=".price, [itemprop=price]" />
+    <label>Price selector <span class="muted">(blank = auto-detect)</span>
+      <input name="price_selector" value="${v.price_selector ?? ''}" placeholder=".price  ·  or a JSON path: 0.salePrice" />
     </label>
     <p class="hint">
-      To get a selector: open the page, right-click the price → Inspect → right-click the
-      highlighted element → Copy → Copy selector.
+      Leave blank to auto-detect — it reads JSON-LD and embedded page data (Walmart etc.), or a
+      JSON API response. Otherwise give a CSS selector (right-click the price → Inspect → Copy →
+      Copy selector) or a JSON field path like <code>0.salePrice</code>. Best Buy Canada links are
+      converted to the price API automatically; other hard-blocked stores need their own API URL
+      (DevTools → Network → XHR) or a <code>SCRAPER_API_KEY</code>.
     </p>
     <div class="two">
       <label>Currency<input name="currency" value="${v.currency ?? 'CAD'}" maxlength="3" /></label>

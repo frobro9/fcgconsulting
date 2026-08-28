@@ -1,7 +1,7 @@
 import { applyCheckToTracker, recordCheck } from './db'
 import { sendPriceAlert } from './email'
-import { fetchHtml, parsePrice } from './price'
-import type { Bindings, Tracker } from './types'
+import { fetchContent, parsePrice } from './price'
+import type { Bindings, PriceResult, Tracker } from './types'
 
 export type CheckOutcome = {
   trackerId: string
@@ -23,11 +23,24 @@ export type CheckOutcome = {
  * After an alert the baseline is lowered to the new price, so repeat alerts
  * only fire on a further drop.
  */
+async function readPrice(env: Bindings, t: Tracker): Promise<PriceResult> {
+  // 1. Plain fetch.
+  let f = await fetchContent(t.url, env, 'plain')
+  let r: PriceResult = f.ok
+    ? parsePrice(f.body, t.price_selector, t.currency)
+    : { ok: false, error: f.error }
+
+  // 2. Retry through the rendering scraper if the plain attempt was blocked or
+  //    produced no price and a key is configured.
+  if (!r.ok && env.SCRAPER_API_KEY && f.via === 'plain') {
+    f = await fetchContent(t.url, env, 'render')
+    r = f.ok ? parsePrice(f.body, t.price_selector, t.currency) : { ok: false, error: f.error }
+  }
+  return r
+}
+
 export async function checkTracker(env: Bindings, t: Tracker): Promise<CheckOutcome> {
-  const fetched = await fetchHtml(t.url, env)
-  const result = fetched.ok
-    ? parsePrice(fetched.html, t.price_selector, t.currency)
-    : ({ ok: false, error: fetched.error } as const)
+  const result = await readPrice(env, t)
 
   if (!result.ok) {
     await recordCheck(env.DB, {

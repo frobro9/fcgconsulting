@@ -12,6 +12,7 @@ import {
   type NewTracker,
   type TrackerUpdate,
 } from './db'
+import { toApiUrl } from './sites'
 import type { Bindings } from './types'
 import { detailPage, listPage, loginPage, newTrackerPage } from './views'
 
@@ -160,7 +161,8 @@ function parseTrackerForm(
   const kindRaw = str(body, 'kind')
   const kind: 'flight' | 'item' = kindRaw === 'flight' ? 'flight' : 'item'
   const label = str(body, 'label')
-  const url = str(body, 'url')
+  // Rewrite recognized retailer product pages to their JSON price API.
+  const url = toApiUrl(str(body, 'url'))
   const selectorRaw = str(body, 'price_selector')
   const currency = (str(body, 'currency') || 'CAD').toUpperCase().slice(0, 3)
   const target_price = numOrNull(str(body, 'target_price'))
