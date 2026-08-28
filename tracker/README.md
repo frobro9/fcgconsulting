@@ -23,16 +23,20 @@ The tracker fetches the URL and parses the response:
   `Product` / `Offer` data, then to embedded framework state (`__NEXT_DATA__` and other
   `<script type="application/json">` blobs — e.g. Walmart).
 
-Fetching: a plain `fetch` with a browser User-Agent by default. Retail sites (Best Buy, Amazon,
-airlines, Kiwi.com) block that or render prices with JavaScript. Options:
+### Fetching
 
-- **Best Buy Canada** product links are rewritten to the price API automatically (`src/sites.ts`
-  — add a rule there for another store).
-- For other bot-blocked stores, paste the store's **own JSON API URL** (DevTools → Network → XHR).
-- Or set `SCRAPER_API_KEY` to route through a JS-rendering scraper (`SCRAPER_API_PROVIDER` =
-  `scrapingbee` (default), `scraperapi`, or `scrapingant`).
+1. **Plain fetch** with a browser User-Agent (free, fast) — works for most sites via the parsing
+   above.
+2. **Best Buy Canada** product links are rewritten to their price API automatically
+   (`src/sites.ts` — add a rule there for another store).
+3. **Rendering-scraper fallback:** if the plain fetch is blocked (403/429) or yields no price and
+   `SCRAPER_API_KEY` is set, the check retries once through a headless-browser scraping API with a
+   premium proxy. `SCRAPER_API_PROVIDER` = `scrapingbee` (default), `scraperapi`, or `scrapingant`.
 
-A blocked or unparseable fetch shows an `error` status with an explanation rather than a wrong price.
+So: for hard sites (Amazon, airlines, anything behind Cloudflare/Akamai/PerimeterX, or pure
+client-rendered prices), set **one** `SCRAPER_API_KEY` secret and everything falls back to it
+automatically; cheap sites still use the free plain fetch. Without a key, a blocked/unparseable
+fetch shows an `error` status with an explanation rather than a wrong price.
 
 ## Alert rule
 
