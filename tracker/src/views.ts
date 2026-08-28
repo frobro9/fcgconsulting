@@ -92,10 +92,11 @@ function trackerFormFields(
       <input name="price_selector" value="${v.price_selector ?? ''}" placeholder=".price  ·  or a JSON path: 0.salePrice" />
     </label>
     <p class="hint">
-      HTML page: a CSS selector (right-click the price → Inspect → Copy → Copy selector), or blank
-      to read JSON-LD. JSON API URL: a field path like <code>0.salePrice</code> or
-      <code>data.price</code>, or blank to auto-detect. Retail sites often block plain requests —
-      a store's own product/offers API URL usually works without a scraper key.
+      Leave blank to auto-detect. HTML page: a CSS selector (right-click the price → Inspect →
+      Copy → Copy selector) or blank reads JSON-LD. JSON API URL: a field path like
+      <code>0.salePrice</code> or <code>data.price</code>. Best Buy Canada product links are
+      converted to the price API automatically; for other bot-blocked stores, paste the store's
+      own product/offers API URL (DevTools → Network → XHR).
     </p>
     <div class="two">
       <label>Currency<input name="currency" value="${v.currency ?? 'CAD'}" maxlength="3" /></label>
