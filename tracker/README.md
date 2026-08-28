@@ -20,7 +20,8 @@ The tracker fetches the URL and parses the response:
   (`0.salePrice`, `data.price`) or a bare key to deep-search; blank auto-detects common fields
   (`salePrice`, `currentPrice`, `price`, `regularPrice`, …).
 - **HTML response**: the selector is a CSS selector; blank falls back to the page's JSON-LD
-  `Product` / `Offer` data.
+  `Product` / `Offer` data, then to embedded framework state (`__NEXT_DATA__` and other
+  `<script type="application/json">` blobs — e.g. Walmart).
 
 Fetching: a plain `fetch` with a browser User-Agent by default. Retail sites (Best Buy, Amazon,
 airlines, Kiwi.com) block that or render prices with JavaScript. Options:

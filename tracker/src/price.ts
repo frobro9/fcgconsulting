@@ -112,9 +112,25 @@ export function parsePrice(
   const ld = priceFromJsonLd(root)
   if (ld) return { ok: true, price: ld.price, currency: ld.currency || fallbackCurrency }
 
+  // Next.js / framework state blobs embedded in the page (Walmart, many others).
+  for (const script of [
+    root.querySelector('script#__NEXT_DATA__'),
+    ...root.querySelectorAll('script[type="application/json"]'),
+  ]) {
+    if (!script) continue
+    let data: unknown
+    try {
+      data = JSON.parse(script.text)
+    } catch {
+      continue
+    }
+    const hit = priceFromJson(data, null, fallbackCurrency)
+    if (hit.ok) return hit
+  }
+
   return {
     ok: false,
-    error: 'No price selector set and no JSON-LD offer found — add a CSS selector for the price',
+    error: 'No price found — add a CSS selector (HTML) or field path (JSON) for the price',
   }
 }
 
@@ -147,17 +163,16 @@ function priceFromJson(
     if (raw == null) {
       return { ok: false, error: `Path "${selector}" not found in the JSON response` }
     }
-    const price = normalisePrice(String(raw))
+    const price = coercePrice(raw)
     if (price == null) {
-      return { ok: false, error: `Value at "${selector}" ("${String(raw).slice(0, 40)}") is not a number` }
+      return { ok: false, error: `Value at "${selector}" ("${JSON.stringify(raw).slice(0, 40)}") is not a price` }
     }
     return { ok: true, price, currency }
   }
 
   for (const key of PRICE_KEYS) {
     const raw = deepFind(data, key)
-    if (raw == null) continue
-    const price = normalisePrice(String(raw))
+    const price = coercePrice(raw)
     if (price != null && price > 0) return { ok: true, price, currency }
   }
 
@@ -167,6 +182,20 @@ function priceFromJson(
       'JSON response has no recognizable price field — set the selector to the price path ' +
       '(e.g. "0.salePrice" or "data.price")',
   }
+}
+
+/** number | "$12.34" | { price: 12.34 } | { amount: "12.34" } -> 12.34 */
+function coercePrice(raw: unknown, depth = 0): number | null {
+  if (raw == null || depth > 3) return null
+  if (typeof raw === 'number') return Number.isFinite(raw) && raw > 0 ? raw : null
+  if (typeof raw === 'string') return normalisePrice(raw)
+  if (typeof raw === 'object' && !Array.isArray(raw)) {
+    for (const k of ['price', 'amount', 'value', 'priceString', 'displayValue', 'current']) {
+      const n = coercePrice((raw as Record<string, unknown>)[k], depth + 1)
+      if (n != null) return n
+    }
+  }
+  return null
 }
 
 /** Resolve "a.b.0.c" / "a[0].b"; a single bare segment also deep-searches. */
@@ -202,7 +231,7 @@ function deepFind(node: unknown, key: string, depth = 0): unknown {
 }
 
 function jsonCurrency(data: unknown): string | null {
-  for (const key of ['priceCurrency', 'currency', 'currencyCode', 'currencyIsoCode']) {
+  for (const key of ['priceCurrency', 'currency', 'currencyCode', 'currencyIsoCode', 'currencyUnit']) {
     const v = deepFind(data, key)
     if (typeof v === 'string' && /^[A-Za-z]{3}$/.test(v)) return v.toUpperCase()
   }
