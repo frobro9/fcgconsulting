@@ -29,26 +29,32 @@ The tracker fetches the URL and parses the response:
    above.
 2. **Best Buy Canada** product links are rewritten to their price API automatically
    (`src/sites.ts` — add a rule there for another store).
-3. **Headless-browser fallback:** if the plain fetch is blocked (403/429) or yields no price and
-   `SCRAPER_API_KEY` is set, the check retries once through a real browser. `SCRAPER_API_PROVIDER`:
-   - `cloudflare` (default) — Cloudflare **Browser Rendering** REST API. Free tier, no third-party
-     signup. `SCRAPER_API_KEY` = a Cloudflare API token with *Browser Rendering* permission;
-     `SCRAPER_ACCOUNT_ID` is the account id (already set in `wrangler.jsonc`).
-   - `scrapingbee` / `scraperapi` / `scrapingant` — third-party scraping APIs with a premium proxy,
-     for the few sites Cloudflare's browser can't get past. `SCRAPER_API_KEY` = that service's key.
+3. **Render fallback**, tried in order when the plain fetch is blocked or yields no price:
+   - **Tier 1** — `SCRAPER_API_KEY` + `SCRAPER_API_PROVIDER` (default `cloudflare`: Cloudflare
+     **Browser Rendering**, free tier, no third-party signup). Handles JS-rendered sites and most
+     bot-blocked ones.
+   - **Tier 2** — `SCRAPER2_KEY` + `SCRAPER2_PROVIDER` (default `scraperapi`; also `scrapingbee` /
+     `scrapingant`). A residential-proxy scraper in its strongest anti-bot mode, only invoked when
+     tier 1 still comes up empty. This is what gets past Amazon / Akamai / PerimeterX. Costs more
+     credits per request, so put a longer `interval_hours` on those trackers.
 
-So: for hard sites (Amazon, airlines, anything behind Akamai/PerimeterX, or pure client-rendered
-prices), set **one** `SCRAPER_API_KEY` secret and everything falls back to it automatically; cheap
-sites still use the free plain fetch. Without a key, a blocked/unparseable fetch shows an `error`
-status with an explanation rather than a wrong price.
+Cheap/open sites never touch either tier. Without any key, a blocked/unparseable fetch shows an
+`error` status rather than a wrong price.
 
-### Get the Cloudflare API token
+### Keys for the render fallback
 
-dash.cloudflare.com → **My Profile → API Tokens → Create Token → Custom token**: permission
-**Account · Browser Rendering · Edit**, scoped to your account. Then:
+**Tier 1 — Cloudflare API token:** dash.cloudflare.com → **My Profile → API Tokens → Create Token
+→ Custom token**: permission **Account · Browser Run · Edit**, scoped to your account.
 
 ```bash
-npx wrangler secret put SCRAPER_API_KEY   # paste the token
+npx wrangler secret put SCRAPER_API_KEY   # the Cloudflare token
+```
+
+**Tier 2 — ScraperAPI key (optional, for Amazon-class sites):** sign up at scraperapi.com (1,000
+free credits/month), copy the key.
+
+```bash
+npx wrangler secret put SCRAPER2_KEY      # the ScraperAPI key
 ```
 
 ## Alert rule

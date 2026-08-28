@@ -21,24 +21,34 @@ export type FetchResult =
  *   - `scrapingbee` / `scraperapi` / `scrapingant`: third-party scraping APIs
  *     with a premium proxy. Needs SCRAPER_API_KEY = that service's key.
  */
+/** Two render tiers: 1 = SCRAPER_API_* (default Cloudflare Browser Rendering),
+ *  2 = SCRAPER2_* (a residential-proxy scraper for Amazon-class sites). */
+export function renderTierConfigured(env: Bindings, tier: 1 | 2): boolean {
+  return tier === 1 ? !!env.SCRAPER_API_KEY : !!env.SCRAPER2_KEY
+}
+
 export async function fetchContent(
   rawUrl: string,
   env: Bindings,
-  mode: 'plain' | 'render' = 'plain',
+  mode: 'plain' | 'render1' | 'render2' = 'plain',
 ): Promise<FetchResult> {
   const url = toApiUrl(rawUrl)
 
-  if (mode === 'render') {
-    if (!env.SCRAPER_API_KEY) {
-      return { ok: false, via: 'scraper', error: 'SCRAPER_API_KEY not set' }
+  if (mode === 'render1' || mode === 'render2') {
+    const tier1 = mode === 'render1'
+    const key = tier1 ? env.SCRAPER_API_KEY : env.SCRAPER2_KEY
+    const provider = tier1
+      ? env.SCRAPER_API_PROVIDER || 'cloudflare'
+      : env.SCRAPER2_PROVIDER || 'scraperapi'
+    if (!key) {
+      return { ok: false, via: 'scraper', error: `${tier1 ? 'SCRAPER_API_KEY' : 'SCRAPER2_KEY'} not set` }
     }
-    const provider = env.SCRAPER_API_PROVIDER || 'cloudflare'
-    const req = buildRenderRequest(provider, url, env)
+    const req = buildRenderRequest(provider, url, key, env.SCRAPER_ACCOUNT_ID)
     if (!req) {
-      return { ok: false, via: 'scraper', error: `SCRAPER_API_PROVIDER "${provider}" not supported` }
+      return { ok: false, via: 'scraper', error: `render provider "${provider}" not supported` }
     }
     try {
-      const res = await fetch(req.endpoint, { ...req.init, signal: AbortSignal.timeout(60_000) })
+      const res = await fetch(req.endpoint, { ...req.init, signal: AbortSignal.timeout(70_000) })
       if (!res.ok) {
         return { ok: false, via: 'scraper', error: `${provider} responded ${res.status}` }
       }
@@ -48,7 +58,7 @@ export async function fetchContent(
       }
       return { ok: true, via: 'scraper', body }
     } catch (err) {
-      return { ok: false, via: 'scraper', error: `Render fetch failed: ${errMsg(err)}` }
+      return { ok: false, via: 'scraper', error: `${provider} fetch failed: ${errMsg(err)}` }
     }
   }
 
@@ -96,13 +106,13 @@ type RenderRequest = {
 function buildRenderRequest(
   provider: string,
   target: string,
-  env: Bindings,
+  key: string,
+  accountId: string | undefined,
 ): RenderRequest | null {
-  const key = env.SCRAPER_API_KEY as string
   const u = encodeURIComponent(target)
   switch (provider) {
     case 'cloudflare': {
-      const acct = env.SCRAPER_ACCOUNT_ID
+      const acct = accountId
       if (!acct) return null
       return {
         endpoint: `https://api.cloudflare.com/client/v4/accounts/${acct}/browser-rendering/content`,
@@ -121,13 +131,15 @@ function buildRenderRequest(
         },
       }
     }
+    // Tier-2 providers use their strongest anti-bot mode (needed for Amazon-class
+    // sites) — which also costs more credits per request.
     case 'scrapingbee':
       return {
-        endpoint: `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&premium_proxy=true&country_code=ca`,
+        endpoint: `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&stealth_proxy=true&country_code=ca`,
       }
     case 'scraperapi':
       return {
-        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&premium=true&country_code=ca`,
+        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&ultra_premium=true&country_code=ca`,
       }
     case 'scrapingant':
       return {
