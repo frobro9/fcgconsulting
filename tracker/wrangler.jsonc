@@ -29,9 +29,12 @@
   // Price checks run every 6 hours.
   "triggers": { "crons": ["0 */6 * * *"] },
 
-  // Bound as a Worker custom domain (the fcgconsulting.ca zone is on this account).
-  // The marketing site's "Client Portal" link points here.
-  "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
+  // Custom domain: a Worker custom domain needs the full fcgconsulting.ca zone
+  // on Cloudflare (nameservers pointed at CF), which it currently is not — the
+  // marketing site reaches Pages via a CNAME only. Until the zone is on CF, the
+  // Worker runs at its *.workers.dev URL. To enable later, move the zone to
+  // Cloudflare and uncomment:
+  // "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
 
   "vars": {
     // Any address on a domain with Email Routing enabled on this account.
