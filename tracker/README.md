@@ -43,10 +43,10 @@ npx wrangler d1 create fcg-tracker
 npx wrangler d1 execute fcg-tracker --remote --file=schema.sql
 npx wrangler d1 execute fcg-tracker --local  --file=schema.sql   # for `wrangler dev`
 
-# 3. Email Routing (dashboard): Email > Email Routing on fcgconsulting.com,
+# 3. Email Routing (dashboard): Email > Email Routing on fcgconsulting.ca,
 #    add + verify the address that should receive alerts. Then set it in wrangler.jsonc:
 #      send_email[0].destination_address  AND  vars.ALERT_TO   -> that verified address
-#      vars.ALERT_FROM -> any address @ a domain with Email Routing enabled
+#      vars.ALERT_FROM -> any address @ a domain with Email Routing enabled (alerts@fcgconsulting.ca)
 
 # 4. Secrets
 npx wrangler secret put ADMIN_USERNAME     # e.g. admin
@@ -61,10 +61,10 @@ npx wrangler deploy
 
 ### Custom domain
 
-The marketing site links "Client Portal" to `https://portal.fcgconsulting.com`. After the first
-deploy, bind that hostname: dashboard → Workers & Pages → `fcg-tracker` → Settings → Domains &
-Routes → Add → `portal.fcgconsulting.com` (or uncomment the `routes` block in `wrangler.jsonc`
-and redeploy). Until then the Worker is reachable at its `*.workers.dev` URL.
+The marketing site links "Client Portal" to `https://portal.fcgconsulting.ca`. After the first
+deploy, `portal.fcgconsulting.ca` is bound automatically by the `routes` block in `wrangler.jsonc`
+(the `fcgconsulting.ca` zone is on this account). Until DNS/cert propagate, the Worker is also
+reachable at its `*.workers.dev` URL.
 
 ## Local dev
 
