@@ -35,9 +35,9 @@
   "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
 
   "vars": {
-    // Resend sender. Use onboarding@resend.dev until fcgconsulting.ca is a
-    // verified sending domain in Resend, then switch to alerts@fcgconsulting.ca.
-    "ALERT_FROM": "onboarding@resend.dev",
+    // Resend sender. fcgconsulting.ca is a verified sending domain in Resend
+    // (DKIM resend._domainkey + send.fcgconsulting.ca SPF/MX — M365 MX untouched).
+    "ALERT_FROM": "alerts@fcgconsulting.ca",
     "ALERT_TO": "camfrohar@fcgconsulting.ca",
     "SCRAPER_API_PROVIDER": "scrapingbee"
   }
