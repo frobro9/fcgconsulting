@@ -44,7 +44,7 @@ async function sendViaResend(
     body: JSON.stringify({
       // Must be onboarding@resend.dev or an address on a domain verified in
       // Resend. ALERT_FROM works once fcgconsulting.ca is verified there.
-      from: `FCG Price Tracker <${env.ALERT_FROM || 'onboarding@resend.dev'}>`,
+      from: `Camify <${env.ALERT_FROM || 'onboarding@resend.dev'}>`,
       to: [env.ALERT_TO],
       subject: m.subject,
       text: m.text,
@@ -61,7 +61,7 @@ async function sendViaBinding(
   m: { subject: string; text: string; html: string },
 ): Promise<void> {
   const msg = createMimeMessage()
-  msg.setSender({ addr: env.ALERT_FROM, name: 'FCG Price Tracker' })
+  msg.setSender({ addr: env.ALERT_FROM, name: 'Camify' })
   msg.setRecipient(env.ALERT_TO)
   msg.setSubject(m.subject)
   msg.addMessage({ contentType: 'text/plain', data: m.text })
@@ -89,7 +89,7 @@ function buildHtml(
             style="background:#1e3a5f;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">
         View it
       </a></p>
-      <p style="color:#999;font-size:12px;margin-top:24px">Automated alert from the FCG price tracker.</p>
+      <p style="color:#999;font-size:12px;margin-top:24px">Automated alert from Camify.</p>
     </div>`
 }
 
