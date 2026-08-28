@@ -138,8 +138,10 @@ function buildRenderRequest(
         endpoint: `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&stealth_proxy=true&country_code=ca`,
       }
     case 'scraperapi':
+      // autoparse -> structured JSON (with `pricing`) for Amazon/Walmart/Google;
+      // plain rendered HTML for everything else.
       return {
-        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&ultra_premium=true&country_code=ca`,
+        endpoint: `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&autoparse=true&country_code=ca`,
       }
     case 'scrapingant':
       return {
@@ -226,6 +228,7 @@ const PRICE_KEYS = [
   'finalPrice',
   'ourPrice',
   'yourPrice',
+  'pricing', // ScraperAPI autoparse
   'price',
   'lowPrice',
   'listPrice',
