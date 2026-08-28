@@ -5,28 +5,47 @@ import type { Bindings, PriceResult } from './types'
 const DESKTOP_UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
 
+export type FetchResult =
+  | { ok: true; body: string; via: 'plain' | 'scraper' }
+  | { ok: false; error: string; via: 'plain' | 'scraper' }
+
 /**
- * Fetch the page HTML. If SCRAPER_API_KEY is set, route through a JS-rendering
- * scraping API (default provider: ScrapingBee); otherwise a plain fetch with a
- * realistic browser User-Agent.
+ * Fetch the URL's content.
+ *
+ * `mode: 'plain'` is a direct fetch with a browser User-Agent (free, fast).
+ * `mode: 'scraper'` routes through a JS-rendering scraping API with a premium
+ * proxy — used as a fallback when the plain fetch is blocked or yields no
+ * price. Requires SCRAPER_API_KEY; `SCRAPER_API_PROVIDER` picks the service
+ * (`scrapingbee` default, `scraperapi`, `scrapingant`).
  */
-export async function fetchHtml(
+export async function fetchContent(
   rawUrl: string,
   env: Bindings,
-): Promise<{ ok: true; html: string } | { ok: false; error: string }> {
+  mode: 'plain' | 'scraper' = 'plain',
+): Promise<FetchResult> {
   const url = toApiUrl(rawUrl)
-  try {
-    if (env.SCRAPER_API_KEY) {
-      const provider = env.SCRAPER_API_PROVIDER || 'scrapingbee'
-      const endpoint = buildScraperUrl(provider, url, env.SCRAPER_API_KEY)
-      if (!endpoint) return { ok: false, error: `Unknown SCRAPER_API_PROVIDER "${provider}"` }
-      const res = await fetch(endpoint, { signal: AbortSignal.timeout(45_000) })
-      if (!res.ok) {
-        return { ok: false, error: `Scraper API responded ${res.status}` }
-      }
-      return { ok: true, html: await res.text() }
-    }
 
+  if (mode === 'scraper') {
+    if (!env.SCRAPER_API_KEY) {
+      return { ok: false, via: 'scraper', error: 'SCRAPER_API_KEY not set' }
+    }
+    const provider = env.SCRAPER_API_PROVIDER || 'scrapingbee'
+    const endpoint = buildScraperUrl(provider, url, env.SCRAPER_API_KEY)
+    if (!endpoint) {
+      return { ok: false, via: 'scraper', error: `Unknown SCRAPER_API_PROVIDER "${provider}"` }
+    }
+    try {
+      const res = await fetch(endpoint, { signal: AbortSignal.timeout(60_000) })
+      if (!res.ok) {
+        return { ok: false, via: 'scraper', error: `Scraper API responded ${res.status}` }
+      }
+      return { ok: true, via: 'scraper', body: await res.text() }
+    } catch (err) {
+      return { ok: false, via: 'scraper', error: `Scraper fetch failed: ${errMsg(err)}` }
+    }
+  }
+
+  try {
     const res = await fetch(url, {
       redirect: 'follow',
       signal: AbortSignal.timeout(20_000),
@@ -37,31 +56,38 @@ export async function fetchHtml(
       },
     })
     if (!res.ok) {
+      const blocked = res.status === 403 || res.status === 429
       return {
         ok: false,
+        via: 'plain',
         error: `Site responded ${res.status}${
-          res.status === 403 || res.status === 429
-            ? ' (bot-blocked — set SCRAPER_API_KEY to use a rendering scraper)'
+          blocked
+            ? env.SCRAPER_API_KEY
+              ? ' (bot-blocked)'
+              : ' (bot-blocked — set the SCRAPER_API_KEY secret to fetch it through a headless browser)'
             : ''
         }`,
       }
     }
-    return { ok: true, html: await res.text() }
+    return { ok: true, via: 'plain', body: await res.text() }
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err)
-    return { ok: false, error: `Fetch failed: ${msg}` }
+    return { ok: false, via: 'plain', error: `Fetch failed: ${errMsg(err)}` }
   }
+}
+
+function errMsg(err: unknown): string {
+  return err instanceof Error ? err.message : String(err)
 }
 
 function buildScraperUrl(provider: string, target: string, key: string): string | null {
   const u = encodeURIComponent(target)
   switch (provider) {
     case 'scrapingbee':
-      return `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true`
+      return `https://app.scrapingbee.com/api/v1/?api_key=${key}&url=${u}&render_js=true&premium_proxy=true&country_code=ca`
     case 'scraperapi':
-      return `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true`
+      return `https://api.scraperapi.com/?api_key=${key}&url=${u}&render=true&premium=true&country_code=ca`
     case 'scrapingant':
-      return `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true`
+      return `https://api.scrapingant.com/v2/general?url=${u}&x-api-key=${key}&browser=true&proxy_type=residential&proxy_country=CA`
     default:
       return null
   }
