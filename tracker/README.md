@@ -6,7 +6,9 @@ re-checks their price every few hours, and emails when the price drops.
 - **Runtime:** Cloudflare Worker + [Hono]
 - **Data:** Cloudflare D1
 - **Schedule:** Cloudflare Cron Trigger (`0 */6 * * *`)
-- **Email:** Cloudflare Email Routing `send_email` binding (free; one verified recipient)
+- **Email:** Resend (`RESEND_API_KEY`). Cloudflare's `send_email` binding is a fallback but is
+  unused here — `fcgconsulting.ca` runs Microsoft 365 mail, so enabling Cloudflare Email Routing
+  would replace its MX and break inboxes.
 - **Auth:** single admin login, HMAC-signed session cookie
 
 ## How price reading works
@@ -43,16 +45,17 @@ npx wrangler d1 create fcg-tracker
 npx wrangler d1 execute fcg-tracker --remote --file=schema.sql
 npx wrangler d1 execute fcg-tracker --local  --file=schema.sql   # for `wrangler dev`
 
-# 3. Email Routing (dashboard): Email > Email Routing on fcgconsulting.ca,
-#    add + verify the address that should receive alerts. Then set it in wrangler.jsonc:
-#      send_email[0].destination_address  AND  vars.ALERT_TO   -> that verified address
-#      vars.ALERT_FROM -> any address @ a domain with Email Routing enabled (alerts@fcgconsulting.ca)
+# 3. Email via Resend: set the RESEND_API_KEY secret (step 4).
+#    vars.ALERT_TO   -> where alerts land (camfrohar@fcgconsulting.ca)
+#    vars.ALERT_FROM -> onboarding@resend.dev until fcgconsulting.ca is a
+#                       verified sending domain in Resend, then alerts@fcgconsulting.ca
 
 # 4. Secrets
 npx wrangler secret put ADMIN_USERNAME     # e.g. admin
 npx wrangler secret put ADMIN_PASSWORD     # e.g. admin  (change later — see below)
 npx wrangler secret put SESSION_SECRET     # long random string
 npx wrangler secret put CRON_TOKEN         # random string; guards POST /cron/run
+npx wrangler secret put RESEND_API_KEY     # enables the Resend alert path
 npx wrangler secret put SCRAPER_API_KEY    # optional
 
 # 5. Deploy

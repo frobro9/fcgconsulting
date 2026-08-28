@@ -16,9 +16,10 @@
     }
   ],
 
-  // Email Routing must be enabled on fcgconsulting.ca, and the destination
-  // address below must be added + verified there
-  // (Email > Email Routing > Destination addresses).
+  // Alerts go out via Resend (RESEND_API_KEY secret) because fcgconsulting.ca
+  // runs Microsoft 365 mail — enabling Cloudflare Email Routing would replace
+  // its MX and break inboxes. This send_email binding is only the fallback used
+  // when RESEND_API_KEY is unset; it stays inert without Email Routing.
   "send_email": [
     {
       "name": "EMAIL",
@@ -29,14 +30,15 @@
   // Price checks run every 6 hours.
   "triggers": { "crons": ["0 */6 * * *"] },
 
-  // Bound as a Worker custom domain (the fcgconsulting.ca zone is on this account).
-  // The marketing site's "Client Portal" link points here.
-  "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
+  // Uncomment once fcgconsulting.ca is Active as a Cloudflare zone (nameservers
+  // moved from GoDaddy). Then `wrangler deploy` binds the custom domain; until
+  // then the Worker runs at its *.workers.dev URL.
+  // "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
 
   "vars": {
-    // Any address on a domain with Email Routing enabled on this account.
-    "ALERT_FROM": "alerts@fcgconsulting.ca",
-    // Must match the verified `destination_address` above.
+    // Resend sender. Use onboarding@resend.dev until fcgconsulting.ca is a
+    // verified sending domain in Resend, then switch to alerts@fcgconsulting.ca.
+    "ALERT_FROM": "onboarding@resend.dev",
     "ALERT_TO": "camfrohar@fcgconsulting.ca",
     "SCRAPER_API_PROVIDER": "scrapingbee"
   }
@@ -46,5 +48,6 @@
   //   ADMIN_PASSWORD       e.g. admin  (weak — change after first login)
   //   SESSION_SECRET       long random string
   //   CRON_TOKEN           random string; guards POST /cron/run
+  //   RESEND_API_KEY       enables the Resend alert path (recommended here)
   //   SCRAPER_API_KEY      optional; enables JS-rendering scrape fallback
 }

@@ -14,6 +14,7 @@ export type Bindings = {
   SESSION_SECRET: string
   CRON_TOKEN?: string
   SCRAPER_API_KEY?: string
+  RESEND_API_KEY?: string
 }
 
 export type TrackerKind = 'flight' | 'item'
