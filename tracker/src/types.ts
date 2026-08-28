@@ -8,6 +8,7 @@ export type Bindings = {
   ALERT_TO: string
   SCRAPER_API_PROVIDER?: string
   SCRAPER_ACCOUNT_ID?: string
+  SCRAPER2_PROVIDER?: string
 
   // secrets
   ADMIN_USERNAME: string
@@ -15,6 +16,7 @@ export type Bindings = {
   SESSION_SECRET: string
   CRON_TOKEN?: string
   SCRAPER_API_KEY?: string
+  SCRAPER2_KEY?: string
   RESEND_API_KEY?: string
 }
 

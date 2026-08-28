@@ -1,6 +1,6 @@
 import { applyCheckToTracker, recordCheck } from './db'
 import { sendPriceAlert } from './email'
-import { fetchContent, parsePrice } from './price'
+import { fetchContent, parsePrice, renderTierConfigured } from './price'
 import type { Bindings, PriceResult, Tracker } from './types'
 
 export type CheckOutcome = {
@@ -24,18 +24,26 @@ export type CheckOutcome = {
  * only fire on a further drop.
  */
 async function readPrice(env: Bindings, t: Tracker): Promise<PriceResult> {
+  const parse = (body: string) => parsePrice(body, t.price_selector, t.currency)
+
   // 1. Plain fetch.
   let f = await fetchContent(t.url, env, 'plain')
-  let r: PriceResult = f.ok
-    ? parsePrice(f.body, t.price_selector, t.currency)
-    : { ok: false, error: f.error }
+  let r: PriceResult = f.ok ? parse(f.body) : { ok: false, error: f.error }
+  if (r.ok) return r
 
-  // 2. Retry through the rendering scraper if the plain attempt was blocked or
-  //    produced no price and a key is configured.
-  if (!r.ok && env.SCRAPER_API_KEY && f.via === 'plain') {
-    f = await fetchContent(t.url, env, 'render')
-    r = f.ok ? parsePrice(f.body, t.price_selector, t.currency) : { ok: false, error: f.error }
+  // 2. Render tier 1 (Cloudflare Browser Rendering by default).
+  if (renderTierConfigured(env, 1)) {
+    f = await fetchContent(t.url, env, 'render1')
+    r = f.ok ? parse(f.body) : { ok: false, error: f.error }
+    if (r.ok) return r
   }
+
+  // 3. Render tier 2 (residential-proxy scraper — Amazon-class sites).
+  if (renderTierConfigured(env, 2)) {
+    f = await fetchContent(t.url, env, 'render2')
+    r = f.ok ? parse(f.body) : { ok: false, error: f.error }
+  }
+
   return r
 }
 

@@ -39,11 +39,12 @@
     // (DKIM resend._domainkey + send.fcgconsulting.ca SPF/MX — M365 MX untouched).
     "ALERT_FROM": "alerts@fcgconsulting.ca",
     "ALERT_TO": "camfrohar@fcgconsulting.ca",
-    // Headless-browser fallback for blocked / JS-only sites.
-    //   cloudflare  -> Cloudflare Browser Rendering (free tier, in-ecosystem)
-    //   scrapingbee | scraperapi | scrapingant -> third-party scraping APIs
+    // Render fallback, tried in order when a plain fetch yields no price:
+    //   tier 1 (SCRAPER_API_*) -> Cloudflare Browser Rendering, free tier
+    //   tier 2 (SCRAPER2_*)    -> residential-proxy scraper for Amazon-class sites
     "SCRAPER_API_PROVIDER": "cloudflare",
-    "SCRAPER_ACCOUNT_ID": "cf1de50389d6ef075bafb97c3ed4a81c"
+    "SCRAPER_ACCOUNT_ID": "cf1de50389d6ef075bafb97c3ed4a81c",
+    "SCRAPER2_PROVIDER": "scraperapi"
   }
 
   // Secrets — set with `wrangler secret put <NAME>` (never commit these):
@@ -52,7 +53,8 @@
   //   SESSION_SECRET       long random string
   //   CRON_TOKEN           random string; guards POST /cron/run
   //   RESEND_API_KEY       enables the Resend alert path
-  //   SCRAPER_API_KEY      enables the render fallback. For provider "cloudflare"
-  //                        this is a Cloudflare API token with Browser Rendering
-  //                        permission; for the others it's that service's key.
+  //   SCRAPER_API_KEY      tier-1 render fallback. For provider "cloudflare" this
+  //                        is a CF API token with Browser Rendering permission.
+  //   SCRAPER2_KEY         tier-2 render fallback (optional). ScraperAPI key by
+  //                        default; used only when tier 1 still finds no price.
 }
