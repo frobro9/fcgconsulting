@@ -88,12 +88,14 @@ function trackerFormFields(
     <label>URL
       <input name="url" type="url" required value="${v.url ?? ''}" placeholder="https://…" />
     </label>
-    <label>Price CSS selector <span class="muted">(blank = auto-read JSON-LD)</span>
-      <input name="price_selector" value="${v.price_selector ?? ''}" placeholder=".price, [itemprop=price]" />
+    <label>Price selector <span class="muted">(blank = auto-detect)</span>
+      <input name="price_selector" value="${v.price_selector ?? ''}" placeholder=".price  ·  or a JSON path: 0.salePrice" />
     </label>
     <p class="hint">
-      To get a selector: open the page, right-click the price → Inspect → right-click the
-      highlighted element → Copy → Copy selector.
+      HTML page: a CSS selector (right-click the price → Inspect → Copy → Copy selector), or blank
+      to read JSON-LD. JSON API URL: a field path like <code>0.salePrice</code> or
+      <code>data.price</code>, or blank to auto-detect. Retail sites often block plain requests —
+      a store's own product/offers API URL usually works without a scraper key.
     </p>
     <div class="two">
       <label>Currency<input name="currency" value="${v.currency ?? 'CAD'}" maxlength="3" /></label>

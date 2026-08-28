@@ -13,17 +13,22 @@ re-checks their price every few hours, and emails when the price drops.
 
 ## How price reading works
 
-1. If a **CSS selector** is set on the tracker, the price is read from that element
-   (`content` attribute or text).
-2. If the selector is blank, the Worker looks for a JSON-LD `Product` / `Offer` block and reads
-   `offers.price`.
-3. By default it does a plain `fetch` with a browser User-Agent. Many sites (Kiwi.com, Amazon,
-   most airlines) block that or render prices with JavaScript. Set the `SCRAPER_API_KEY` secret to
-   route requests through a JS-rendering scraping API instead — `SCRAPER_API_PROVIDER` selects
-   `scrapingbee` (default), `scraperapi`, or `scrapingant`.
+The tracker fetches the URL and parses the response:
 
-Without a scraper key, JS-heavy pages show an `error` status with an explanatory message rather
-than a wrong price.
+- **JSON response** (a store's product/offers API — e.g.
+  `https://www.bestbuy.ca/api/offers/v1/products/<sku>/offers`): the selector is a field path
+  (`0.salePrice`, `data.price`) or a bare key to deep-search; blank auto-detects common fields
+  (`salePrice`, `currentPrice`, `price`, `regularPrice`, …).
+- **HTML response**: the selector is a CSS selector; blank falls back to the page's JSON-LD
+  `Product` / `Offer` data.
+
+Fetching: a plain `fetch` with a browser User-Agent by default. Retail sites (Best Buy, Amazon,
+airlines, Kiwi.com) block that or render prices with JavaScript — for those, either point the
+tracker at the site's **own JSON API** (usually not bot-blocked), or set the `SCRAPER_API_KEY`
+secret to route through a JS-rendering scraper (`SCRAPER_API_PROVIDER` = `scrapingbee` (default),
+`scraperapi`, or `scrapingant`).
+
+A blocked or unparseable fetch shows an `error` status with an explanation rather than a wrong price.
 
 ## Alert rule
 
