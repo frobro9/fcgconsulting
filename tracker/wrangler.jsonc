@@ -30,10 +30,9 @@
   // Price checks run every 6 hours.
   "triggers": { "crons": ["0 */6 * * *"] },
 
-  // Uncomment once fcgconsulting.ca is Active as a Cloudflare zone (nameservers
-  // moved from GoDaddy). Then `wrangler deploy` binds the custom domain; until
-  // then the Worker runs at its *.workers.dev URL.
-  // "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
+  // fcgconsulting.ca is a Cloudflare zone, so `wrangler deploy` binds this
+  // custom domain (auto SSL). The marketing site's "Client Portal" link points here.
+  "routes": [{ "pattern": "portal.fcgconsulting.ca", "custom_domain": true }],
 
   "vars": {
     // Resend sender. Use onboarding@resend.dev until fcgconsulting.ca is a
