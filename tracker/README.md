@@ -23,10 +23,13 @@ The tracker fetches the URL and parses the response:
   `Product` / `Offer` data.
 
 Fetching: a plain `fetch` with a browser User-Agent by default. Retail sites (Best Buy, Amazon,
-airlines, Kiwi.com) block that or render prices with JavaScript — for those, either point the
-tracker at the site's **own JSON API** (usually not bot-blocked), or set the `SCRAPER_API_KEY`
-secret to route through a JS-rendering scraper (`SCRAPER_API_PROVIDER` = `scrapingbee` (default),
-`scraperapi`, or `scrapingant`).
+airlines, Kiwi.com) block that or render prices with JavaScript. Options:
+
+- **Best Buy Canada** product links are rewritten to the price API automatically (`src/sites.ts`
+  — add a rule there for another store).
+- For other bot-blocked stores, paste the store's **own JSON API URL** (DevTools → Network → XHR).
+- Or set `SCRAPER_API_KEY` to route through a JS-rendering scraper (`SCRAPER_API_PROVIDER` =
+  `scrapingbee` (default), `scraperapi`, or `scrapingant`).
 
 A blocked or unparseable fetch shows an `error` status with an explanation rather than a wrong price.
 

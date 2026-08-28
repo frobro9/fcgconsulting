@@ -1,4 +1,5 @@
 import { parse, type HTMLElement } from 'node-html-parser'
+import { toApiUrl } from './sites'
 import type { Bindings, PriceResult } from './types'
 
 const DESKTOP_UA =
@@ -10,9 +11,10 @@ const DESKTOP_UA =
  * realistic browser User-Agent.
  */
 export async function fetchHtml(
-  url: string,
+  rawUrl: string,
   env: Bindings,
 ): Promise<{ ok: true; html: string } | { ok: false; error: string }> {
+  const url = toApiUrl(rawUrl)
   try {
     if (env.SCRAPER_API_KEY) {
       const provider = env.SCRAPER_API_PROVIDER || 'scrapingbee'
